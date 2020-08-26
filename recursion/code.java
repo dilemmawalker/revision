@@ -36,28 +36,7 @@ public class code{
         c=fact(a+1,b);
         return c*a;
     }
-    public static int calls(int n,int[]dp) { // n=5
-        if (n <= 1) {
-            System.out.println("base: " + n);
-            return dp[n]=n + 1;
-        }
-        // if(dp!=0)
-        // return dp[n];
-
-        int count = 0;
-
-        System.out.println("Pre: " + n);
-        count += calls(n - 1);
-
-        System.out.println("In: " + n);
-        
-        for(int i=0;i<1000000;)
-        i++;
-        count += calls(n - 2);
-        System.out.println("Post: " + n);
-
-        return dp[n]=count + 3;
-    }
+    
     public static void main(String[]args){
         int n=scn.nextInt();
         int[]dp=new int[n+1];
