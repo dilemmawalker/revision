@@ -67,7 +67,6 @@ public class code{
     //    System.out.print(fact(1,n));
     // calls(n,dp);
     int[]arr={1,2,34,5,6,7,5,4,3,6,70};
-    System.out.println(max(0,arr));\
-    ////
+    System.out.println(max(0,arr));
     }
 }
