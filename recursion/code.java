@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class code{
+    public static Scanner scn=new Scanner(System.in);
     public static void increasing(int a,int b){
         if(a==b)
         return;
@@ -36,6 +37,7 @@ public class code{
         return c*a;
     }
     public static void main(String[]args){
-       System.out.print(fact(1,5));
+        int n=scn.nextInt();
+       System.out.print(fact(1,n));
     }
 }
