@@ -87,24 +87,27 @@ public class code{
         ab.addAll(b);
         return ab;
     }
-    public static ArrayList<String> subseq_ret1(String str){
-        if(str.length()==0)
+    public static ArrayList<String> subseq_ret1(String str,int idx){
+        if(str.length()==idx)
         {
            ArrayList<String>arr=new ArrayList<>();
            arr.add("");
             return arr;
         }
 
-        ArrayList<String>a=subseq_ret1(str.substring(1));
+        ArrayList<String>a=subseq_ret1(str,idx+1);
         ArrayList<String>ab=new ArrayList<>();
         
         for(String s:a){
             ab.add(s);
-            ab.add(str.charAt(0)+s);
+            ab.add(str.charAt(idx)+s);
         }
         
         return ab;
     }
+    // public static ArrayList<String> permu(String str){
+
+    // }
     
     public static void main(String[]args){
         // int n=scn.nextInt();
@@ -114,7 +117,7 @@ public class code{
     // int[]arr={1,2,34,5,6,7,5,4,3,6,70};
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
-    System.out.println(subseq_ret("abcd",0,""));  
+    System.out.println(subseq_ret1("abcd",0));  
     // System.out.println(aaa);
     }
 }
