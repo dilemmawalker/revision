@@ -105,9 +105,36 @@ public class code{
         
         return ab;
     }
-    // public static ArrayList<String> permu(String str){
+    
+    public static ArrayList<String> permu(String str,int idx){
+        if(idx==str.length()){
+            ArrayList<String>a=new ArrayList<>();
+            a.add("");
+            return a;
+        }
 
-    // }
+        ArrayList<String>arr=permu(str,idx+1);
+        ArrayList<String>ans=new ArrayList<>();
+        char ch=str.charAt(idx);
+        for(String s:arr){
+           for(int i=0;i<=s.length();i++){
+               ans.add(s.substring(0,i)+ch+s.substring(i));
+           }
+        }
+        return ans;
+    }
+    
+    public static void permu_new(String str,int idx,String ans){
+        if(idx==str.length()){
+            System.out.print(ans+" ");
+            return;
+        }
+
+        char ch=str.charAt(idx);
+        for(int i=0;i<=ans.length();i++){
+            permu_new(str,idx+1,ans.substring(0,i)+ch+ans.substring(i));
+        }
+    }
     
     public static void main(String[]args){
         // int n=scn.nextInt();
@@ -117,7 +144,7 @@ public class code{
     // int[]arr={1,2,34,5,6,7,5,4,3,6,70};
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
-    System.out.println(subseq_ret1("abcd",0));  
-    // System.out.println(aaa);
+    // System.out.println(permu("abc",0,""));  
+    permu_new("abc",0,"");
     }
 }
