@@ -60,14 +60,43 @@ public class code{
         int a=0;
         return Math.max(arr[vidx],max(vidx+1,arr));
     }
+    // public static ArrayList<String>aaa=new ArrayList<>();
+    public static void subseq(String str,int idx,String ans){
+        if(idx==str.length())
+        {
+           System.out.print(ans+" ");
+            return;
+        }
+
+        subseq(str,idx+1,ans);
+        subseq(str,idx+1,ans+str.charAt(idx));
+    }
+
+    public static ArrayList<String> subseq_ret(String str,int idx,String ans){
+        if(idx==str.length())
+        {
+           ArrayList<String>arr=new ArrayList<>();
+           arr.add(ans);
+            return arr;
+        }
+
+        ArrayList<String>a=subseq_ret(str,idx+1,ans);
+        ArrayList<String>b=subseq_ret(str,idx+1,ans+str.charAt(idx));
+        ArrayList<String>ab=new ArrayList<>();
+        ab.addAll(a);
+        ab.addAll(b);
+        return ab;
+    }
     
     public static void main(String[]args){
-        int n=scn.nextInt();
+        // int n=scn.nextInt();
         // int[]dp=new int[n+1];
     //    System.out.print(fact(1,n));
     // calls(n,dp);
-    int[]arr={1,2,34,5,6,7,5,4,3,6,70};
-    System.out.println(max(0,arr));
+    // int[]arr={1,2,34,5,6,7,5,4,3,6,70};
+    // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
+    System.out.println(subseq_ret("abcd",0,""));  
+    // System.out.println(aaa);
     }
 }
