@@ -87,6 +87,21 @@ public class code{
         ab.addAll(b);
         return ab;
     }
+    public static ArrayList<String> subseq_ret1(String str,int idx,String ans){
+        if(idx==str.length())
+        {
+           ArrayList<String>arr=new ArrayList<>();
+           arr.add("");
+            return arr;
+        }
+
+        ArrayList<String>a=subseq_ret1(str,idx+1,ans);
+        ArrayList<String>b=subseq_ret1(str,idx+1,ans+str.charAt(idx));
+        ArrayList<String>ab=new ArrayList<>();
+        ab.addAll(a);
+        ab.addAll(b);
+        return ab;
+    }
     
     public static void main(String[]args){
         // int n=scn.nextInt();
@@ -96,7 +111,7 @@ public class code{
     // int[]arr={1,2,34,5,6,7,5,4,3,6,70};
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
-    System.out.println(subseq_ret("abcd",0,""));  
+    System.out.println(subseq_ret1("abcd",0,""));  
     // System.out.println(aaa);
     }
 }
