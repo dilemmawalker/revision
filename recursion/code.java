@@ -100,7 +100,7 @@ public class code{
         
         for(String s:a){
             ab.add(s);
-            ab.add(s+str);
+            ab.add(str.charAt(0)+s);
         }
         
         return ab;
@@ -114,7 +114,7 @@ public class code{
     // int[]arr={1,2,34,5,6,7,5,4,3,6,70};
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
-    System.out.println(subseq_ret1("abcd"));  
+    System.out.println(subseq_ret("abcd",0,""));  
     // System.out.println(aaa);
     }
 }

@@ -1,1 +1,1 @@
-[, abcd, bcd, bcdabcd, cd, cdabcd, cdbcd, cdbcdabcd, d, dabcd, dbcd, dbcdabcd, dcd, dcdabcd, dcdbcd, dcdbcdabcd]
+[, d, c, cd, b, bd, bc, bcd, a, ad, ac, acd, ab, abd, abc, abcd]
