@@ -135,19 +135,34 @@ public class code{
             permu_new(str,idx+1,ans.substring(0,i)+ch+ans.substring(i));
         }
     }
-    public static void permu_new_non_rep(String str,int idx,String ans){
-        if(idx==str.length()){
+    public static void permu_new1(String str,String ans){
+        if(str.length()==0){
             System.out.print(ans+" ");
             return;
         }
-        boolean []arr=new boolean[26];
-        char ch=str.charAt(idx);
-        for(int i=0;i<=ans.length();i++){
-            if(!arr[ch-'a']){   
-                arr[ch-'a']=true;
-            permu_new_non_rep(str,idx+1,ans.substring(0,i)+ch+ans.substring(i));
+
+        for(int i=0;i<str.length();i++){
+            char ch=str.charAt(i);
+            String nstr=str.substring(0,i)+str.substring(i+1);
+            permu_new1(nstr,ans+ch);
+        }
+
+    }
+    public static void permu_new1_non_repeat(String str,String ans){
+        if(str.length()==0){
+            System.out.print(ans+" ");
+            return;
+        }
+        boolean vis[]=new boolean[26];
+        for(int i=0;i<str.length();i++){
+            char ch=str.charAt(i);
+            String nstr=str.substring(0,i)+str.substring(i+1);
+            if(!vis[ch-'a']){
+                vis[ch-'a']=true;
+                permu_new1_non_repeat(nstr,ans+ch);
             }
         }
+
     }
     
     public static void main(String[]args){
@@ -159,6 +174,6 @@ public class code{
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
-    permu_new_non_rep("abc",0,"");
+    permu_new1_non_repeat("aba","");
     }
 }
