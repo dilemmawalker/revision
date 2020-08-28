@@ -164,6 +164,17 @@ public class code{
         }
 
     }
+    public static String[] st={"yz",":;,","abc","def","ghi","jkl","mno","pqrs","uv","wx","*#@","+-*"};
+    public static void keypad(String str,String ans){
+        if(str.length()==0){
+            System.out.println(ans);
+            return;
+        }
+        for(int i=0;i<st[str.charAt(0)-'0'].length();i++){
+        char ch=st[str.charAt(0)].charAt(i);    
+        keypad(str.substring(1),ans+ch);
+        }
+    }
     
     public static void main(String[]args){
         // int n=scn.nextInt();
@@ -174,6 +185,7 @@ public class code{
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
-    permu_new1_non_repeat("aba","");
+    // permu_new1_non_repeat("aba","");
+    keypad("243","");
     }
 }
