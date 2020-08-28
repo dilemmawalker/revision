@@ -123,7 +123,7 @@ public class code{
         }
         return ans;
     }
-    
+
     public static void permu_new(String str,int idx,String ans){
         if(idx==str.length()){
             System.out.print(ans+" ");
@@ -133,6 +133,20 @@ public class code{
         char ch=str.charAt(idx);
         for(int i=0;i<=ans.length();i++){
             permu_new(str,idx+1,ans.substring(0,i)+ch+ans.substring(i));
+        }
+    }
+    public static void permu_new_non_rep(String str,int idx,String ans){
+        if(idx==str.length()){
+            System.out.print(ans+" ");
+            return;
+        }
+        boolean []arr=new boolean[26];
+        char ch=str.charAt(idx);
+        for(int i=0;i<=ans.length();i++){
+            if(!arr[ch-'a']){   
+                arr[ch-'a']=true;
+            permu_new_non_rep(str,idx+1,ans.substring(0,i)+ch+ans.substring(i));
+            }
         }
     }
     
@@ -145,6 +159,6 @@ public class code{
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
-    permu_new("abc",0,"");
+    permu_new_non_rep("abc",0,"");
     }
 }
