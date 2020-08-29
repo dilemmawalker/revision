@@ -181,7 +181,6 @@ public class code{
             return;
         }
         for(int i=0;i<st[str.charAt(0)-'0'].length();i++){
-            //
         char ch=st[str.charAt(0)-'0'].charAt(i);    
         for(int j=0;j<=ans.length();j++){
 
