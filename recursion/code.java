@@ -171,8 +171,21 @@ public class code{
             return;
         }
         for(int i=0;i<st[str.charAt(0)-'0'].length();i++){
-        char ch=st[str.charAt(0)].charAt(i);    
+        char ch=st[str.charAt(0)-'0'].charAt(i);    
         keypad(str.substring(1),ans+ch);
+        }
+    }     
+    public static void keypad_permu(String str,String ans){
+        if(str.length()==0){
+            System.out.println(ans);
+            return;
+        }
+        for(int i=0;i<st[str.charAt(0)-'0'].length();i++){
+        char ch=st[str.charAt(0)-'0'].charAt(i);    
+        for(int j=0;j<=ans.length();j++){
+
+        keypad_permu(str.substring(1),ans.substring(0,j)+ch+ans.substring(j));
+        }
         }
     }
     
@@ -186,6 +199,6 @@ public class code{
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
     // permu_new1_non_repeat("aba","");
-    keypad("243","");
+    keypad_permu("02","");
     }
 }
