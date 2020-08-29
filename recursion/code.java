@@ -205,21 +205,22 @@ public class code{
         }
         return ansss;
     }
+
     public static void keypad_permu_ret_without_dupli(String str,String ans){
         if(str.length()==0){
             System.out.println(ans);
             return;
         }
         int vis=0;
-        for(int i=0;i<st[str.charAt(0)-'0'].length();i++){
-            
-            for(int j=0;j<=ans.length();j++){
-            char ch=st[str.charAt(0)-'0'].charAt(i);   
-            int mask=0; 
-            mask=1<<(ch-'a');
+        for(int i=0;i<str.length();i++){
+           
+            String s=st[str.charAt(i)-'0'];
+            for(int j=0;j<s.length();j++){
+            char ch=s.charAt(j);
+            int mask=1<<(ch-'a');
             if((vis & mask)==0){
-                vis=1<<(ch-'a');
-            keypad_permu_ret(str.substring(0,j)+str.substring(j),ans+ch);
+                vis=vis|mask;
+                keypad_permu_ret_without_dupli(str.substring(0,i)+str.substring(i+1),ans+ch);
             }
             }
         }
@@ -236,6 +237,6 @@ public class code{
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
     // permu_new1_non_repeat("aba","");
-    keypad_permu_ret_without_dupli("02","");
+    keypad_permu_ret_without_dupli("252","");
     }
 }
