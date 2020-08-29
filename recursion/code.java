@@ -188,6 +188,43 @@ public class code{
         }
         }
     }
+    public static ArrayList<String> keypad_permu_ret(String str,String ans){
+        if(str.length()==0){
+           ArrayList<String>anss=new ArrayList<>();
+           anss.add(ans);
+            return anss;
+        }
+        ArrayList<String>ansss=new ArrayList<>();
+        for(int i=0;i<st[str.charAt(0)-'0'].length();i++){
+        char ch=st[str.charAt(0)-'0'].charAt(i);    
+        for(int j=0;j<=ans.length();j++){
+
+        ArrayList<String>a=keypad_permu_ret(str.substring(1),ans.substring(0,j)+ch+ans.substring(j));
+        ansss.addAll(a);
+        }
+        }
+        return ansss;
+    }
+    public static void keypad_permu_ret_without_dupli(String str,String ans){
+        if(str.length()==0){
+            System.out.println(ans);
+            return;
+        }
+        int vis=0;
+        for(int i=0;i<st[str.charAt(0)-'0'].length();i++){
+            
+            for(int j=0;j<=ans.length();j++){
+            char ch=st[str.charAt(0)-'0'].charAt(i);   
+            int mask=0; 
+            mask=1<<(ch-'a');
+            if((vis & mask)==0){
+                vis=1<<(ch-'a');
+            keypad_permu_ret(str.substring(0,j)+str.substring(j),ans+ch);
+            }
+            }
+        }
+    }
+    
     
     public static void main(String[]args){
         // int n=scn.nextInt();
@@ -199,6 +236,6 @@ public class code{
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
     // permu_new1_non_repeat("aba","");
-    keypad_permu("02","");
+    keypad_permu_ret_without_dupli("02","");
     }
 }
