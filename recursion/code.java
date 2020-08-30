@@ -225,6 +225,35 @@ public class code{
             }
         }
     }
+
+    //keypad main
+    public static void keypad_real(String str,String ans){
+        if(str.length()==0){
+            System.out.println(ans);
+            return;
+        }
+
+        char ch=str.charAt(0);
+        if(ch=='1' && str.length()>=2){
+            char chh=str.charAt(1);
+            if(chh=='1'){
+                for(int i=0;i<st[11].length();i++){
+                    char c=st[11].charAt(i);    
+                    keypad_real(str.substring(2),ans+c);
+                }
+            }
+            if(chh=='0'){
+                for(int i=0;i<st[10].length();i++){
+                    char c=st[10].charAt(i);    
+                    keypad_real(str.substring(2),ans+c);
+                }
+            }
+        }
+        for(int i=0;i<st[ch-'0'].length();i++){
+            char c=st[ch-'0'].charAt(i);    
+            keypad_real(str.substring(1),ans+c);
+        }
+    }
     
     
     public static void main(String[]args){
@@ -237,6 +266,6 @@ public class code{
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
     // permu_new1_non_repeat("aba","");
-    keypad_permu_ret_without_dupli("252","");
+    keypad_real("1152","");
     }
 }
