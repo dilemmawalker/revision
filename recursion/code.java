@@ -254,6 +254,24 @@ public class code{
             keypad_real(str.substring(1),ans+c);
         }
     }
+    public static ArrayList<String> keypad_2(String str){
+        if(str.length()==0){
+            ArrayList<String>arr=new ArrayList<>();
+            arr.add("");
+            return arr;
+        }
+
+        ArrayList<String>ans=new ArrayList<>();
+        ArrayList<String>a=keypad_2(str.substring(1));
+
+        String s=st[str.charAt(0)-'0'];
+        for(int ch=0;ch<s.length();ch++){
+            for(String ss:a){
+                ans.add(s.charAt(ch)+ss);
+            }
+        }
+        return ans;
+    }
     
     
     public static void main(String[]args){
@@ -265,7 +283,7 @@ public class code{
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
-    // permu_new1_non_repeat("aba","");
-    keypad_real("1152","");
+     System.out.println(keypad_2("8211"));
+    // keypad_real("1152","");
     }
 }
