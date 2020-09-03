@@ -253,7 +253,7 @@ public class code{
             char c=st[ch-'0'].charAt(i);    
             keypad_real(str.substring(1),ans+c);
         }
-    }//
+    }
     public static ArrayList<String> keypad_2(String str){  
         if(str.length()==0){
             ArrayList<String>arr=new ArrayList<>();
