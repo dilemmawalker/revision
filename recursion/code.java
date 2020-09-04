@@ -411,6 +411,34 @@ public class code{
         return c;
     }
 
+    public static int numIslands(char[][] arr) {
+        int n=arr.length;
+        int m=arr[0].length;
+        int c=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(arr[i][j]=='1'){
+                    c++;
+                    arr[i][j]='0';
+                    islands(arr,i,j);
+                }
+            }
+        }
+        return c;
+    }
+    public static void islands(char[][]arr,int r,int c){
+        int n=arr.length;
+        int m=arr[0].length;
+        for(int i=0;i<4;i++){
+            int x=r+dir[i][0];
+            int y=c+dir[i][1];
+            if(x>=0 && y>=0 && x<n && y<m && arr[x][y]=='1'){
+                arr[x][y]='0';
+                islands(arr,x,y);
+            }
+        }
+    }
+
     public static void display(int[][]arr){
         int n=arr.length;
         int m=arr[0].length;
@@ -420,6 +448,25 @@ public class code{
             }
             System.out.println();
         }
+    }
+    public static int floodfill_height(int sr,int sc,int er,int ec,int[][]board){
+        if(sr==er && sc==ec){
+            return 0;
+        }
+
+        board[sr][sc]=1;
+        int max=0;
+        for(int i=0;i<8;i++){
+            int x=sr+dir[i][0];
+            int y=sc+dir[i][1];
+            if(x>=0 && y>=0 && x<=er && y<=ec && board[x][y]!=1){
+                // board[x][y]=1;
+                max=Math.max(max,floodfill_height(x,y,er,ec,board));
+                // board[x][y]=0;
+            }
+        }
+        board[sr][sc]=0;
+        return max+1;
     }
     
     
@@ -434,8 +481,8 @@ public class code{
     // System.out.println(permu("abc",0,""));  
     //  System.out.println(keypad_2("8211"));
     // keypad_real("1152","");
-    int[][]dp=new int[3][4];
-    System.out.println(mazepath_4dir(0,0,2,3,dp,""));
+    int[][]dp=new int[4][5];
+    System.out.println(floodfill_height(0,0,3,4,dp));
     // display(dp);
     }
 }
