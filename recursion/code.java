@@ -300,6 +300,57 @@ public class code{
 
         return a;
     }
+    public static int multi_diag(int sr,int sc,int er,int ec,String ans,int[][]dp){
+        if(sr==er && sc==ec){
+            System.out.println(ans);
+            dp[sr][sc]=1;
+        return 1;
+        }
+        if(dp[sr][sc]!=0)
+        return dp[sr][sc];
+        
+        int c=0;
+        if(sr+1<=er)
+        c+=multi_diag(sr+1,sc,er,ec,ans+"V",dp);
+        if(sc+1<=ec)
+        c+=multi_diag(sr,sc+1,er,ec,ans+"H",dp);
+        if(sr+1<=er && sc+1<=ec)
+        c+=multi_diag(sr+1,sc+1,er,ec,ans+"D",dp);
+
+        return dp[sr][sc]=c;
+    }
+    public static int multi_diag_tab(int sr,int sc,int er,int ec,String ans,int[][]dp){
+        for(sr=er;sr>=0; sr--){
+            for(sc=ec;sc>=0;sc--){
+        
+                if(sr==er && sc==ec){
+                    dp[sr][sc]=1;
+                    continue;
+                }
+
+        int c=0;
+        if(sr+1<=er)
+        c+=dp[sr+1][sc];
+        if(sc+1<=ec)
+        c+=dp[sr][sc+1];
+        if(sr+1<=er && sc+1<=ec)
+        c+=dp[sr+1][sc+1];
+
+        dp[sr][sc]=c;
+            }}
+
+        return dp[0][0];
+    }
+    public static void display(int[][]arr){
+        int n=arr.length;
+        int m=arr[0].length;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                System.out.print(arr[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
     
     
     public static void main(String[]args){
@@ -313,6 +364,8 @@ public class code{
     // System.out.println(permu("abc",0,""));  
     //  System.out.println(keypad_2("8211"));
     // keypad_real("1152","");
-    System.out.println(multi_ret(0,0,3,4,""));
+    int[][]dp=new int[4][5];
+    System.out.println(multi_diag_tab(0,0,3,4,"", dp));
+    display(dp);
     }
 }
