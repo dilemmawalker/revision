@@ -360,6 +360,7 @@ public class code{
     }
     //direction array
     public static int[][]dir={{1,0},{0,1},{-1,0},{0,-1},{-1,1},{1,1},{1,-1},{-1,-1}};
+    public static String[]ndir={"S","E","N","W","N-E","S-E","S-W","N-W"};
     public static int mazepath_4dir(int sr,int sc,int er,int ec,int[][]arr,String ans){
         if(sr==er && sc==ec){
             // System.out.println(ans);
@@ -449,24 +450,46 @@ public class code{
             System.out.println();
         }
     }
-    public static int floodfill_height(int sr,int sc,int er,int ec,int[][]board){
+    public static class mypair{
+        int max=0;
+        int min=1000000;
+        String str="";
+        String str2="";
+        mypair(int max,int min,String str,String str2){
+            this.max=max;
+            this.min=min;
+            this.str=str;
+            this.str2=str2;
+        }
+    }
+    public static mypair floodfill_height(int sr,int sc,int er,int ec,int[][]board){
         if(sr==er && sc==ec){
-            return 0;
+            return new mypair(0,0,"","");
         }
 
         board[sr][sc]=1;
-        int max=0;
+        mypair max=new mypair(0,1000000,"","");
         for(int i=0;i<8;i++){
             int x=sr+dir[i][0];
             int y=sc+dir[i][1];
             if(x>=0 && y>=0 && x<=er && y<=ec && board[x][y]!=1){
                 // board[x][y]=1;
-                max=Math.max(max,floodfill_height(x,y,er,ec,board));
+                mypair nmax=floodfill_height(x,y,er,ec,board);
+                if(max.max<nmax.max){
+                    max.max=nmax.max;
+                    max.str=ndir[i]+" "+nmax.str;
+                }
+                if(nmax.min<max.min){
+                    max.min=nmax.min;
+                    max.str2=ndir[i]+" "+nmax.str2;
+                }
                 // board[x][y]=0;
             }
         }
         board[sr][sc]=0;
-        return max+1;
+        max.max++;
+        max.min++;
+        return max;
     }
     
     
@@ -482,7 +505,11 @@ public class code{
     //  System.out.println(keypad_2("8211"));
     // keypad_real("1152","");
     int[][]dp=new int[4][4];
-    System.out.println(floodfill_height(0,0,3,3,dp));
+    mypair m=floodfill_height(0,0,3,3,dp);
+    System.out.println(m.max);
+    System.out.println(m.str);
+    System.out.println(m.min);
+    System.out.println(m.str2);
     // display(dp);
     }
 }
