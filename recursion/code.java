@@ -272,6 +272,34 @@ public class code{
         }
         return ans;
     }
+    public static int multi(int sr,int sc,int er,int ec,String ans){
+        if(sr==er && sc==ec){
+            System.out.println(ans);
+        return 1;
+        }
+        
+        int c=0;
+        if(sr+1<=er)
+        c+=multi(sr+1,sc,er,ec,ans+"V");
+        if(sc+1<=ec)
+        c+=multi(sr,sc+1,er,ec,ans+"H");
+
+        return c;
+    }
+    public static ArrayList<String> multi_ret(int sr,int sc,int er,int ec,String ans){
+        if(sr==er && sc==ec){
+           ArrayList<String>arr=new ArrayList<>();
+           arr.add(ans);
+           return arr;
+        }
+        ArrayList<String>a=new ArrayList<>();
+        if(sr+1<=er)
+        a.addAll(multi_ret(sr+1,sc,er,ec,ans+"V"));
+        if(sc+1<=ec)
+        a.addAll(multi_ret(sr,sc+1,er,ec,ans+"H"));
+
+        return a;
+    }
     
     
     public static void main(String[]args){
@@ -283,7 +311,8 @@ public class code{
     // System.out.println(max(0,arr));
     ////wsdfghjkjhgfd
     // System.out.println(permu("abc",0,""));  
-     System.out.println(keypad_2("8211"));
+    //  System.out.println(keypad_2("8211"));
     // keypad_real("1152","");
+    System.out.println(multi_ret(0,0,3,4,""));
     }
 }
