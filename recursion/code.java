@@ -338,10 +338,79 @@ public class code{
 
         dp[sr][sc]=c;
             }}
-            //
 
         return dp[0][0];
     }
+
+    public static int maze_multi(int sr,int sc,int er,int ec, String ans){
+        if(sr==er && sc==ec){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=1;i<=er && sr+i<=er;i++)
+        c+=maze_multi(sr+i,sc,er,ec,ans+"V"+i);
+        for(int i=1;i<=ec && sc+i<=ec;i++)
+        c+=maze_multi(sr,sc+i,er,ec,ans+"H"+i);
+        for(int i=1;sr+i<=er && sc+i<=ec ;i++)
+        c+=maze_multi(sr+i,sc+i,er,ec,ans+"D"+i);
+
+        return c;
+    }
+    //direction array
+    public static int[][]dir={{1,0},{0,1},{-1,0},{0,-1},{-1,1},{1,1},{1,-1},{-1,-1}};
+    public static int mazepath_4dir(int sr,int sc,int er,int ec,int[][]arr,String ans){
+        if(sr==er && sc==ec){
+            // System.out.println(ans);
+            return 1;
+        }
+        arr[sr][sc]=1;
+        int c=0;
+        for(int i=0;i<4;i++){
+            int x=sr+dir[i][0];
+            int y=sc+dir[i][1];
+            if(x<=er && y<=ec && x>=0 && y>=0 && arr[x][y]!=1)
+            c+=mazepath_4dir(x,y,er,ec,arr,ans);
+        }
+        arr[sr][sc]=0;
+        return c;
+    }
+    public static int mazepath_8dir(int sr,int sc,int er,int ec,int[][]arr,String ans){
+        if(sr==er && sc==ec){
+            // System.out.println(ans);
+            return 1;
+        }
+        arr[sr][sc]=1;
+        int c=0;
+        for(int i=0;i<8;i++){
+            int x=sr+dir[i][0];
+            int y=sc+dir[i][1];
+            if(x<=er && y<=ec && x>=0 && y>=0 && arr[x][y]!=1)
+            c+=mazepath_8dir(x,y,er,ec,arr,ans);
+        }
+        arr[sr][sc]=0;
+        return c;
+    }
+    public static int mazepath_8dir_multi(int sr,int sc,int er,int ec,int[][]arr,String ans){
+        if(sr==er && sc==ec){
+            // System.out.println(ans);
+            return 1;
+        }
+        arr[sr][sc]=1;
+        int c=0;
+
+        for(int j=1;j<=er && j<=ec;j++)
+        for(int i=0;i<8;i++){
+            int x=sr+dir[i][0]*j;
+            int y=sc+dir[i][1]*j;
+            if(x<=er && y<=ec && x>=0 && y>=0 && arr[x][y]!=1)
+            c+=mazepath_8dir_multi(x,y,er,ec,arr,ans);
+        }
+        arr[sr][sc]=0;
+        return c;
+    }
+
     public static void display(int[][]arr){
         int n=arr.length;
         int m=arr[0].length;
@@ -365,8 +434,8 @@ public class code{
     // System.out.println(permu("abc",0,""));  
     //  System.out.println(keypad_2("8211"));
     // keypad_real("1152","");
-    int[][]dp=new int[4][5];
-    System.out.println(multi_diag_tab(0,0,3,4,"", dp));
-    display(dp);
+    int[][]dp=new int[3][4];
+    System.out.println(mazepath_4dir(0,0,2,3,dp,""));
+    // display(dp);
     }
 }
