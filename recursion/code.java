@@ -481,8 +481,8 @@ public class code{
     // System.out.println(permu("abc",0,""));  
     //  System.out.println(keypad_2("8211"));
     // keypad_real("1152","");
-    int[][]dp=new int[4][5];
-    System.out.println(floodfill_height(0,0,3,4,dp));
+    int[][]dp=new int[4][4];
+    System.out.println(floodfill_height(0,0,3,3,dp));
     // display(dp);
     }
 }
