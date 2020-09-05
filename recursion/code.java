@@ -491,6 +491,7 @@ public class code{
         max.min++;
         return max;
     }
+    //coin change
     public static void coin_permu(int[]arr,int tar,String ans){
         if(tar<0)
         return ;
@@ -550,6 +551,76 @@ public class code{
         }
     }
 
+    //subsequence
+    public static int coin_permu_infi_subseq(int[]arr,int tar,int idx,String ans){
+        if(tar==0){
+            System.out.println(ans);
+            return 1;
+        }
+        if(idx>=arr.length)
+        return 0;
+
+        int c=0;
+        int a=arr[idx];
+        if(tar-a>=0)
+        c+=coin_permu_infi_subseq(arr,tar-a,0,ans+a);
+        c+=coin_permu_infi_subseq(arr,tar,idx+1,ans);
+
+        return c;
+    }
+
+    public static int coin_permu_one_subseq(int[]arr,int tar,int idx,String ans,boolean[]vis){
+        if(tar==0){
+            System.out.println(ans);
+            return 1;
+        }
+        if(idx>=arr.length)
+        return 0;
+        
+
+        int c=0;
+        if(tar-arr[idx]>=0 && vis[idx]==false){
+            vis[idx]=true;
+        c+=coin_permu_one_subseq(arr,tar-arr[idx],0,ans+arr[idx],vis);
+            vis[idx]=false;
+        }
+        c+=coin_permu_one_subseq(arr,tar,idx+1,ans,vis);
+        return c;
+    }
+
+    public static int coin_combi_infi_subseq(int[]arr,int tar,int idx,String ans){
+        if(tar==0){
+            System.out.println(ans);
+            return 1;
+        }
+        if(idx>=arr.length)
+        return 0;
+
+        int c=0;
+        if(tar-arr[idx]>=0)
+        c+=coin_combi_infi_subseq(arr,tar-arr[idx],idx,ans+arr[idx]);
+        c+=coin_combi_infi_subseq(arr,tar,idx+1,ans);
+
+        return c;
+    }
+
+    public static int coin_combi_one_subseq(int[]arr,int tar,int idx,String ans){
+        if(tar==0){
+            System.out.println(ans);
+            return 1;
+        }
+        if(idx>=arr.length)
+        return 0;
+        
+
+        int c=0;
+        if(tar-arr[idx]>=0)
+        c+=coin_combi_one_subseq(arr,tar-arr[idx],idx+1,ans+arr[idx]);
+        c+=coin_combi_one_subseq(arr,tar,idx+1,ans);
+        return c;
+    }
+
+
     
     
     public static void main(String[]args){
@@ -574,7 +645,7 @@ public class code{
     int[]arr={2,3,5,7};
     int n=arr.length;
     boolean[]vis=new boolean[n];
-    System.out.println(combi_infi(arr,100,0,""));
+    System.out.println(coin_combi_infi_subseq(arr,10,0,""));
     // combi_1coin(arr,10,0,"");
     }
 }
