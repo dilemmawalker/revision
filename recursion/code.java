@@ -491,6 +491,65 @@ public class code{
         max.min++;
         return max;
     }
+    public static void coin_permu(int[]arr,int tar,String ans){
+        if(tar<0)
+        return ;
+        if(tar==0){
+            System.out.println(ans);
+            return;
+        }
+
+        for(int i=0;i<arr.length;i++){
+            int a=arr[i];
+            coin_permu(arr,tar-a,ans+" "+a);
+        }
+    }
+    public static ArrayList<String> coin_permu1(int[]arr,int tar,String ans,boolean[]vis){
+        if(tar==0){
+            ArrayList<String>ar=new ArrayList<>();
+            ar.add(ans);
+            return ar;
+        }
+
+        ArrayList<String>aa=new ArrayList<>();
+        for(int i=0;i<arr.length;i++){
+            int a=arr[i];
+            if(tar-a>=0 && vis[i]==false){
+                vis[i]=true;
+                aa.addAll(coin_permu1(arr,tar-a,ans+a,vis));
+                vis[i]=false;
+            }
+        }
+        return aa;
+    }
+
+    public static int combi_infi(int[]arr,int tar,int idx,String ans){
+        if(tar==0){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=idx;i<arr.length;i++){
+            int a=arr[i];
+            if(tar-a>=0)
+            c+=combi_infi(arr,tar-a,i,ans+a);
+        }
+        return c;
+    }
+    public static void combi_1coin(int[]arr,int tar,int idx,String ans){
+        if(tar==0){
+            System.out.println(ans);
+        }
+
+        for(int i=idx;i<arr.length;i++){
+            int a=arr[i];
+            if(tar-a>=0){
+                combi_1coin(arr,tar-a,i+1,ans+a);
+            }
+        }
+    }
+
     
     
     public static void main(String[]args){
@@ -505,12 +564,17 @@ public class code{
     //  System.out.println(keypad_2("8211"));
     // keypad_real("1152","");
     //
-    int[][]dp=new int[4][4];
-    mypair m=floodfill_height(0,0,3,3,dp);
-    System.out.println(m.max);
-    System.out.println(m.str);
-    System.out.println(m.min);
-    System.out.println(m.str2);
+    // int[][]dp=new int[4][4];
+    // mypair m=floodfill_height(0,0,3,3,dp);
+    // System.out.println(m.max);
+    // System.out.println(m.str);
+    // System.out.println(m.min);
+    // System.out.println(m.str2);
     // display(dp);
+    int[]arr={2,3,5,7};
+    int n=arr.length;
+    boolean[]vis=new boolean[n];
+    System.out.println(combi_infi(arr,100,0,""));
+    // combi_1coin(arr,10,0,"");
     }
 }
