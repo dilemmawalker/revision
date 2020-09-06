@@ -619,6 +619,27 @@ public class code{
         c+=coin_combi_one_subseq(arr,tar,idx+1,ans);
         return c;
     }
+    //nqueen
+    public static void queen(int box,int tnq,int qpsf,int idx,boolean[]vis,String ans){
+        if(idx==arr.length){
+            if(qpsf==tnq){
+                System.out.println(ans);
+                return 1;
+            }
+            else
+            return 0;
+        }
+
+        int c=0;
+        if(tnq-1>=0 && vis[idx]==false){
+            vis[idx]=true;
+            c+=queen(box-1,tnq,qpsf+1,0,vis,ans+"b"+idx+"q"+qpsf);
+            vis[idx]=false;
+        }
+        c+=queen(box+1,tnq,qpsf,idx+1,vis,ans);
+
+        return c;
+    }
 
 
     
@@ -645,7 +666,7 @@ public class code{
     int[]arr={2,3,5,7};
     int n=arr.length;
     boolean[]vis=new boolean[n];
-    System.out.println(coin_combi_infi_subseq(arr,10,0,""));
+    System.out.println(queen(5,3,0,0,vis,""));
     // combi_1coin(arr,10,0,"");
     }
 }
