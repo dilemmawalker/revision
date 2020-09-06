@@ -620,8 +620,8 @@ public class code{
         return c;
     }
     //nqueen
-    public static void queen(int box,int tnq,int qpsf,int idx,boolean[]vis,String ans){
-        if(idx==arr.length){
+    public static int queen(int box,int tnq,int qpsf,int idx,boolean[]vis,String ans){
+        if(idx==vis.length){
             if(qpsf==tnq){
                 System.out.println(ans);
                 return 1;
@@ -633,16 +633,33 @@ public class code{
         int c=0;
         if(tnq-1>=0 && vis[idx]==false){
             vis[idx]=true;
-            c+=queen(box-1,tnq,qpsf+1,0,vis,ans+"b"+idx+"q"+qpsf);
+            c+=queen(box-1,tnq,qpsf+1,0,vis,ans+"b"+idx+"q"+qpsf+" ");
             vis[idx]=false;
         }
         c+=queen(box+1,tnq,qpsf,idx+1,vis,ans);
 
         return c;
     }
+    public static int queen_combi(int box,int tnq,int qpsf,int idx,boolean[]vis,String ans){
+        if(idx==vis.length){
+            if(qpsf==tnq){
+                System.out.println(ans);
+                return 1;
+            }
+            else
+            return 0;
+        }
 
+        int c=0;
+        if(tnq-1>=0){
+            vis[idx]=true;
+            c+=queen_combi(box-1,tnq,qpsf+1,idx+1,vis,ans+"b"+idx+"q"+qpsf+" ");
+            vis[idx]=false;
+        }
+        c+=queen_combi(box+1,tnq,qpsf,idx+1,vis,ans);
+        return c;
+    }
 
-    
     
     public static void main(String[]args){
         // int n=scn.nextInt();
@@ -665,8 +682,8 @@ public class code{
     // display(dp);
     int[]arr={2,3,5,7};
     int n=arr.length;
-    boolean[]vis=new boolean[n];
-    System.out.println(queen(5,3,0,0,vis,""));
+    boolean[]vis=new boolean[5];
+    System.out.println(queen_combi(5,3,0,0,vis,""));
     // combi_1coin(arr,10,0,"");
     }
 }
