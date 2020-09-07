@@ -690,16 +690,23 @@ public class code{
         }
         return c;
     }
-    public static int nqueen_1_permu(int box,int tnq,int qpsf,int idx,boolean []vis,String ans){
+    public static int nqueen_1_permu(int n,int m,int tnq,int qpsf,int idx,boolean [][]vis,String ans){
         if(qpsf==tnq){
             System.out.println(ans);
             return 1;
         }
 
         int c=0;
-        for(int i=0;i<box;i++){
-            c+=nqueen_1_permu(box,tnq,qpsf+1,0,vis,ans+"("+)
+        for(int i=0;i<n*m;i++){
+            int x=i/m;
+            int y=i%m;
+            if(!vis[x][y]){
+            vis[x][y]=true;
+            c+=nqueen_1_permu(n,m,tnq,qpsf+1,0,vis,ans+"("+x+","+y+")");
+            vis[x][y]=false;
+            }
         }
+        return c;
     }
 
     
@@ -724,8 +731,8 @@ public class code{
     // display(dp);
     int[]arr={2,3,5,7};
     int n=arr.length;
-    boolean[]vis=new boolean[5];
-    System.out.println(queen_combi_rec(5,3,0,0,vis,""));
+    boolean[][]vis=new boolean[5][5];
+    System.out.println(nqueen_1_permu(5,5,3,0,0,vis,""));
     // combi_1coin(arr,10,0,"");
     }
 }
