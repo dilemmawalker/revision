@@ -640,6 +640,7 @@ public class code{
 
         return c;
     }
+
     public static int queen_combi(int box,int tnq,int qpsf,int idx,boolean[]vis,String ans){
         if(idx==vis.length){
             if(qpsf==tnq){
@@ -658,6 +659,47 @@ public class code{
         }
         c+=queen_combi(box+1,tnq,qpsf,idx+1,vis,ans);
         return c;
+    }
+
+    public static int queen_permu_rec(int box,int tnq,int qpsf,int idx,boolean[]vis,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=0;i<box;i++){
+            if(!vis[i]){
+                vis[i]=true;
+                c+=queen_permu_rec(box,tnq,qpsf+1,0,vis,ans+"b"+i+"q"+qpsf+" ");
+                vis[i]=false;
+            }
+        }
+        return c;
+    }
+
+    public static int queen_combi_rec(int box,int tnq,int qpsf,int idx,boolean[]vis,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=idx;i<box;i++){
+            c+=queen_combi_rec(box,tnq,qpsf+1,i+1,vis,ans+"b"+i+"q"+qpsf+" ");
+        }
+        return c;
+    }
+    public static int nqueen_1_permu(int box,int tnq,int qpsf,int idx,boolean []vis,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=0;i<box;i++){
+            c+=nqueen_1_permu(box,tnq,qpsf+1,0,vis,ans+"("+)
+        }
     }
 
     
@@ -683,7 +725,7 @@ public class code{
     int[]arr={2,3,5,7};
     int n=arr.length;
     boolean[]vis=new boolean[5];
-    System.out.println(queen_combi(5,3,0,0,vis,""));
+    System.out.println(queen_combi_rec(5,3,0,0,vis,""));
     // combi_1coin(arr,10,0,"");
     }
 }
