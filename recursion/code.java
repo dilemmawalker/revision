@@ -36,13 +36,13 @@ public class code{
         c=fact(a+1,b);
         return c*a;
     }
-    public static void display(int vidx, int []arr){
-        if(vidx==arr.length)
-        return;
+    // public static void display(int vidx, int []arr){
+    //     if(vidx==arr.length)
+    //     return;
 
-        System.out.print(arr[vidx]+" ");
-        display(vidx+1,arr);
-    }
+    //     System.out.print(arr[vidx]+" ");
+    //     display(vidx+1,arr);
+    // }
     public static boolean find(int vidx, int []arr,int a){
         if(vidx==arr.length)
         return false;
@@ -888,7 +888,8 @@ public class code{
         }
         return c;
     }
-    public static int nqueen4(int n,int m,int tnq,int qpsf,int idx,String ans){    //only by combination
+
+    public static int nqueen4(int n,int m,int tnq,int qpsf,int idx,String ans){    //only by combination(when no. of queen==no. of houses(n))
         if(qpsf==tnq){
             System.out.println(ans);
             return 1;
@@ -915,6 +916,72 @@ public class code{
         return c;
     }
 
+    public static int nqueen4_generic(int n,int m,int tnq,int qpsf,int idx,String ans){    //generic code using subsequence method in case no. of queens < n
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+        if(idx>=n)
+        return 0;
+
+        int c=0;
+        for(int i=0;i<m;i++){
+            int x=idx;
+            int y=i;
+            if(((row1 & (1<<x))==0) && ((col1 & (1<<y))==0) && ((diag1 & (1<<(x-y+m-1)))==0) && ((adiag1 & (1<<(x+y)))==0)){
+                row1^=(1<<x);
+                col1 ^= (1<<y);
+                diag1 ^= (1<<(x-y+m-1));
+                adiag1 ^= (1<<(x+y));
+                c+=nqueen4_generic(n,m,tnq,qpsf+1,idx+1,ans+"("+x+","+y+") ");
+                row1^=(1<<x);
+                col1 ^= (1<<y);
+                diag1 ^= (1<<(x-y+m-1));
+                adiag1 ^= (1<<(x+y));
+            }
+        }
+        c+=nqueen4_generic(n,m,tnq,qpsf,idx+1,ans);
+        return c;
+    }
+
+    public static boolean is_safe_sudoku(int x,int y,int arr[][],int num){
+        
+        if(row[x] & (1<<(num))==1)
+        return false;
+        if(col[y] & (1<<(num))==1)
+        return false;
+        if(diag[((x/3)*3)+y/3] & (1<<(num))==1)
+        return false;
+        return true;
+    }
+       
+
+    public static boolean sudoku(int[][]arr,int idx1,int idx2){
+        if(idx1==arr.length-1 && idx2==arr[0].length){
+            return true;
+        }
+
+        boolean flag=false;
+        for(int i=idx1;i<arr.length;i++){
+            for(int j=idx2;j<arr[0].length;j++){
+                if(arr[i][j]!=-1)
+                continue;
+                for(int k=1;k<10;k++){
+                    boolean a=is_safe_sudoku(i,j,arr,k);
+                    if(a){
+                        arr[i][j]=k;
+                        if(j==arr[0].length-1)
+                        flag=flag||sudoku(arr,i+1,0);
+                        else
+                        flag=flag||sudoku(arr,i,j+1);
+                        arr[i][j]=-1;
+                    }
+                }
+            }
+        }
+        return flag;
+    }
+
     
     public static void main(String[]args){
         // int n=scn.nextInt();
@@ -935,16 +1002,29 @@ public class code{
     // System.out.println(m.min);
     // System.out.println(m.str2);
     // display(dp);
-    int[]arr={2,3,5,7};
+    // int[]arr={2,3,5,7};
     // int n=arr.length;
-    boolean[][]vis=new boolean[4][4];
-    int n=8;
-    int m=8;
-        row=new boolean[n];
-        col=new boolean[m];
-        diag=new boolean[n+m-1];
-        adiag=new boolean[n+m-1];
-    System.out.println(nqueen4(n,m,6,0,0,""));
+    // boolean[][]vis=new boolean[4][4];
+    // int n=8;
+    // int m=8;
+        row=new boolean[9];
+        col=new boolean[9];
+        diag=new boolean[9];
+    //     adiag=new boolean[n+m-1];
+    // System.out.println(nqueen4_generic(n,m,6,0,0,""));
     // combi_1coin(arr,10,0,"");
+    int[][]arr={
+    {1,5,-1,9,-1,-1,-1,-1,-1},
+    {2,-1,-1,-1,-1,3,-1,1,-1},
+    {-1,-1,-1,2,-1,-1,7,-1,4},
+    {3,-1,-1,-1,2,-1,8,-1,-1},
+    {-1,-1,8,-1,-1,-1,4,-1,-1},
+    {-1,-1,2,-1,8,-1,-1,-1,3},
+    {7,-1,4,-1,-1,1,-1,-1,-1},
+    {-1,8,-1,3,-1,-1,-1,-1,1},
+    {-1,-1,-1,-1,-1,4,-1,5,7}
+    };
+    System.out.println(sudoku(arr,0,0));
+    display(arr);
     }
 }
