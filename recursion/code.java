@@ -944,7 +944,7 @@ public class code{
         col=new boolean[m];
         diag=new boolean[n+m-1];
         adiag=new boolean[n+m-1];
-    System.out.println(nqueen4(n,m,8,0,0,""));
+    System.out.println(nqueen4(n,m,6,0,0,""));
     // combi_1coin(arr,10,0,"");
     }
 }
