@@ -783,6 +783,60 @@ public class code{
         return c;
     }
 
+    public static boolean[]row;
+    public static boolean[]col;
+    public static boolean[]diag;
+    public static boolean[]adiag;
+    public static int nqueen2(int n,int m,int tnq,int qpsf,int idx,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=idx;i<n*m;i++){
+            int x=i/m;
+            int y=i%m;
+            if(!row[x] && !col[y] && !diag[x-y+m-1] && !adiag[x+y]){
+                row[x]=true;
+                col[y]=true;
+                diag[x-y+m-1]=true;
+                adiag[x+y]=true;
+                c+=nqueen2(n,m,tnq,qpsf+1,i+1,ans+"("+x+","+y+") ");
+                row[x]=false;
+                col[y]=false;
+                diag[x-y+m-1]=false;
+                adiag[x+y]=false;
+            }
+        }
+        return c;
+    }
+
+    public static int nqueen2_permu(int n,int m,int tnq,int qpsf,int idx,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=0;i<n*m;i++){
+            int x=i/m;
+            int y=i%m;
+            if(!row[x] && !col[y] && !diag[x-y+m-1] && !adiag[x+y]){
+                row[x]=true;
+                col[y]=true;
+                diag[x-y+m-1]=true;
+                adiag[x+y]=true;
+                c+=nqueen2_permu(n,m,tnq,qpsf+1,i+1,ans+"("+x+","+y+") ");
+                row[x]=false;
+                col[y]=false;
+                diag[x-y+m-1]=false;
+                adiag[x+y]=false;
+            }
+        }
+        return c;
+    }
+
     
     public static void main(String[]args){
         // int n=scn.nextInt();
@@ -804,9 +858,15 @@ public class code{
     // System.out.println(m.str2);
     // display(dp);
     int[]arr={2,3,5,7};
-    int n=arr.length;
+    // int n=arr.length;
     boolean[][]vis=new boolean[4][4];
-    System.out.println(nqueen_combi(4,4,4,0,0,vis,""));
+    int n=4;
+    int m=4;
+        row=new boolean[n];
+        col=new boolean[m];
+        diag=new boolean[n+m-1];
+        adiag=new boolean[n+m-1];
+    System.out.println(nqueen2_permu(n,m,4,0,0,""));
     // combi_1coin(arr,10,0,"");
     }
 }
