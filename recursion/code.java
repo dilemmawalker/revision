@@ -836,6 +836,84 @@ public class code{
         }
         return c;
     }
+    public static int row1=0;
+    public static int col1=0;
+    public static int diag1=0;
+    public static int adiag1=0;
+    public static int nqueen3(int n,int m,int tnq,int qpsf,int idx,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=idx;i<n*m;i++){
+            int x=i/m;
+            int y=i%m;
+            if(((row1 & (1<<x))==0) && ((col1 & (1<<y))==0) && ((diag1 & (1<<(x-y+m-1)))==0) && ((adiag1 & (1<<(x+y)))==0)){
+                row1^=(1<<x);
+                col1 ^= (1<<y);
+                diag1 ^= (1<<(x-y+m-1));
+                adiag1 ^= (1<<(x+y));
+                c+=nqueen3(n,m,tnq,qpsf+1,i+1,ans+"("+x+","+y+") ");
+                row1^=(1<<x);
+                col1 ^= (1<<y);
+                diag1 ^= (1<<(x-y+m-1));
+                adiag1 ^= (1<<(x+y));
+            }
+        }
+        return c;
+    }
+    public static int nqueen3_permu(int n,int m,int tnq,int qpsf,int idx,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int c=0;
+        for(int i=0;i<n*m;i++){
+            int x=i/m;
+            int y=i%m;
+            if(((row1 & (1<<x))==0) && ((col1 & (1<<y))==0) && ((diag1 & (1<<(x-y+m-1)))==0) && ((adiag1 & (1<<(x+y)))==0)){
+                row1 |=(1<<x);
+                col1 |= (1<<y);
+                diag1 |= (1<<(x-y+m-1));
+                adiag1 |= (1<<(x+y));
+                c+=nqueen3_permu(n,m,tnq,qpsf+1,i+1,ans+"("+x+","+y+") ");
+                row1 &=~(1<<x);
+                col1 &= ~(1<<y);
+                diag1 &= ~(1<<(x-y+m-1));
+                adiag1 &= ~(1<<(x+y));
+            }
+        }
+        return c;
+    }
+    public static int nqueen4(int n,int m,int tnq,int qpsf,int idx,String ans){    //only by combination
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+        if(idx>=n)
+        return 0;
+
+        int c=0;
+        for(int i=0;i<m;i++){
+            int x=idx;
+            int y=i;
+            if(((row1 & (1<<x))==0) && ((col1 & (1<<y))==0) && ((diag1 & (1<<(x-y+m-1)))==0) && ((adiag1 & (1<<(x+y)))==0)){
+                row1^=(1<<x);
+                col1 ^= (1<<y);
+                diag1 ^= (1<<(x-y+m-1));
+                adiag1 ^= (1<<(x+y));
+                c+=nqueen4(n,m,tnq,qpsf+1,idx+1,ans+"("+x+","+y+") ");
+                row1^=(1<<x);
+                col1 ^= (1<<y);
+                diag1 ^= (1<<(x-y+m-1));
+                adiag1 ^= (1<<(x+y));
+            }
+        }
+        return c;
+    }
 
     
     public static void main(String[]args){
@@ -860,13 +938,13 @@ public class code{
     int[]arr={2,3,5,7};
     // int n=arr.length;
     boolean[][]vis=new boolean[4][4];
-    int n=4;
-    int m=4;
+    int n=8;
+    int m=8;
         row=new boolean[n];
         col=new boolean[m];
         diag=new boolean[n+m-1];
         adiag=new boolean[n+m-1];
-    System.out.println(nqueen2_permu(n,m,4,0,0,""));
+    System.out.println(nqueen4(n,m,8,0,0,""));
     // combi_1coin(arr,10,0,"");
     }
 }
