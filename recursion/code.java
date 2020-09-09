@@ -690,7 +690,7 @@ public class code{
         }
         return c;
     }
-    public static int nqueen_1_permu(int n,int m,int tnq,int qpsf,int idx,boolean [][]vis,String ans){
+    public static int nqueen_1_permu(int n,int m,int tnq,int qpsf,int idx,boolean [][]vis,String ans){  
         if(qpsf==tnq){
             System.out.println(ans);
             return 1;
@@ -704,6 +704,80 @@ public class code{
             vis[x][y]=true;
             c+=nqueen_1_permu(n,m,tnq,qpsf+1,0,vis,ans+"("+x+","+y+")");
             vis[x][y]=false;
+            }
+        }
+        return c;
+    }
+
+    //NQUEEN    
+    public static int nqueen_combi(int n,int m,int tnq,int qpsf,int idx,boolean [][]vis,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+        // if(idx>n*m)
+        // return 0;
+
+        int c=0;
+        for(int i=idx;i<n*m;i++){
+            int x=i/m;
+            int y=i%m;
+           
+                boolean flag=false;
+                for(int j=y-1;j>=0;j--){
+                    if(vis[x][j])
+                    flag=true;
+                }
+                for(int j=x-1;j>=0;j--){
+                    if(vis[j][y])
+                    flag=true;
+                }
+                for(int j=y-1,k=x-1;j>=0 && k>=0;j--,k--){
+                    if(vis[k][j])
+                    flag=true;
+                }
+                for(int j=x-1,k=y+1;j>=0 && k<m;j--,k++){
+                    if(vis[j][k])
+                    flag=true;
+                }
+                if(!flag){
+                    vis[x][y]=true;
+                    c+=nqueen_combi(n,m,tnq,qpsf+1,i+1,vis,ans+"("+x+","+y+") ");
+                    vis[x][y]=false;
+                }
+        }
+        return c;
+    }
+
+    public static int nqueen_permu(int n,int m,int tnq,int qpsf,int idx,boolean [][]vis,String ans){
+        if(qpsf==tnq){
+            System.out.println(ans);
+            return 1;
+        }
+        int c=0;
+        for(int i=0;i<n*m;i++){
+            int x=i/m;
+            int y=i%m;
+                if(!vis[x][y]){
+                boolean flag=false;
+                
+                for(int j=0;j<8;j++){
+                    for(int mag=1;mag<Math.max(n,m);mag++){
+                    int r=x+mag*dir[j][0];
+                    int col=y+mag*dir[j][1];
+                        if(r>=0 && col>=0 && r<n && col<m){
+                            if(vis[r][col]){
+                                flag=true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(!flag){
+                    vis[x][y]=true;
+                    c+=nqueen_permu(n,m,tnq,qpsf+1,i+1,vis,ans+"("+x+","+y+") ");
+                    vis[x][y]=false;
+                }
             }
         }
         return c;
@@ -731,8 +805,8 @@ public class code{
     // display(dp);
     int[]arr={2,3,5,7};
     int n=arr.length;
-    boolean[][]vis=new boolean[5][5];
-    System.out.println(nqueen_1_permu(5,5,3,0,0,vis,""));
+    boolean[][]vis=new boolean[4][4];
+    System.out.println(nqueen_combi(4,4,4,0,0,vis,""));
     // combi_1coin(arr,10,0,"");
     }
 }
