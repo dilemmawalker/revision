@@ -783,59 +783,59 @@ public class code{
         return c;
     }
 
-    public static boolean[]row;
-    public static boolean[]col;
-    public static boolean[]diag;
-    public static boolean[]adiag;
-    public static int nqueen2(int n,int m,int tnq,int qpsf,int idx,String ans){
-        if(qpsf==tnq){
-            System.out.println(ans);
-            return 1;
-        }
+    public static int[]row;
+    public static int[]col;
+    public static int[]diag;
+    public static int[]adiag;
+    // public static int nqueen2(int n,int m,int tnq,int qpsf,int idx,String ans){
+    //     if(qpsf==tnq){
+    //         System.out.println(ans);
+    //         return 1;
+    //     }
 
-        int c=0;
-        for(int i=idx;i<n*m;i++){
-            int x=i/m;
-            int y=i%m;
-            if(!row[x] && !col[y] && !diag[x-y+m-1] && !adiag[x+y]){
-                row[x]=true;
-                col[y]=true;
-                diag[x-y+m-1]=true;
-                adiag[x+y]=true;
-                c+=nqueen2(n,m,tnq,qpsf+1,i+1,ans+"("+x+","+y+") ");
-                row[x]=false;
-                col[y]=false;
-                diag[x-y+m-1]=false;
-                adiag[x+y]=false;
-            }
-        }
-        return c;
-    }
+    //     int c=0;
+    //     for(int i=idx;i<n*m;i++){
+    //         int x=i/m;
+    //         int y=i%m;
+    //         if(!row[x] && !col[y] && !diag[x-y+m-1] && !adiag[x+y]){
+    //             row[x]=true;
+    //             col[y]=true;
+    //             diag[x-y+m-1]=true;
+    //             adiag[x+y]=true;
+    //             c+=nqueen2(n,m,tnq,qpsf+1,i+1,ans+"("+x+","+y+") ");
+    //             row[x]=false;
+    //             col[y]=false;
+    //             diag[x-y+m-1]=false;
+    //             adiag[x+y]=false;
+    //         }
+    //     }
+    //     return c;
+    // }
 
-    public static int nqueen2_permu(int n,int m,int tnq,int qpsf,int idx,String ans){
-        if(qpsf==tnq){
-            System.out.println(ans);
-            return 1;
-        }
+    // public static int nqueen2_permu(int n,int m,int tnq,int qpsf,int idx,String ans){
+    //     if(qpsf==tnq){
+    //         System.out.println(ans);
+    //         return 1;
+    //     }
 
-        int c=0;
-        for(int i=0;i<n*m;i++){
-            int x=i/m;
-            int y=i%m;
-            if(!row[x] && !col[y] && !diag[x-y+m-1] && !adiag[x+y]){
-                row[x]=true;
-                col[y]=true;
-                diag[x-y+m-1]=true;
-                adiag[x+y]=true;
-                c+=nqueen2_permu(n,m,tnq,qpsf+1,i+1,ans+"("+x+","+y+") ");
-                row[x]=false;
-                col[y]=false;
-                diag[x-y+m-1]=false;
-                adiag[x+y]=false;
-            }
-        }
-        return c;
-    }
+    //     int c=0;
+    //     for(int i=0;i<n*m;i++){
+    //         int x=i/m;
+    //         int y=i%m;
+    //         if(!row[x] && !col[y] && !diag[x-y+m-1] && !adiag[x+y]){
+    //             row[x]=true;
+    //             col[y]=true;
+    //             diag[x-y+m-1]=true;
+    //             adiag[x+y]=true;
+    //             c+=nqueen2_permu(n,m,tnq,qpsf+1,i+1,ans+"("+x+","+y+") ");
+    //             row[x]=false;
+    //             col[y]=false;
+    //             diag[x-y+m-1]=false;
+    //             adiag[x+y]=false;
+    //         }
+    //     }
+    //     return c;
+    // }
     public static int row1=0;
     public static int col1=0;
     public static int diag1=0;
@@ -946,39 +946,45 @@ public class code{
 
     public static boolean is_safe_sudoku(int x,int y,int arr[][],int num){
         
-        if(row[x] & (1<<(num))==1)
+        if((row[x] & (1<<(num)))!=0)
         return false;
-        if(col[y] & (1<<(num))==1)
+        if((col[y] & (1<<(num)))!=0)
         return false;
-        if(diag[((x/3)*3)+y/3] & (1<<(num))==1)
+        if((diag[((x/3)*3)+y/3] & (1<<(num)))!=0)
         return false;
         return true;
     }
-       
 
-    public static boolean sudoku(int[][]arr,int idx1,int idx2){
-        if(idx1==arr.length-1 && idx2==arr[0].length){
+    public static boolean sudoku(int[][]arr,int i,int j){
+        if(i==arr.length){
+            display(arr);
             return true;
         }
 
         boolean flag=false;
-        for(int i=idx1;i<arr.length;i++){
-            for(int j=idx2;j<arr[0].length;j++){
-                if(arr[i][j]!=-1)
-                continue;
+                if(arr[i][j]==-1) {
                 for(int k=1;k<10;k++){
                     boolean a=is_safe_sudoku(i,j,arr,k);
                     if(a){
                         arr[i][j]=k;
+                        row[i]^=(1<<k);
+                        col[j]^=(1<<k);
+                        diag[(i/3)*3+j/3] ^=(1<<k);
                         if(j==arr[0].length-1)
                         flag=flag||sudoku(arr,i+1,0);
                         else
                         flag=flag||sudoku(arr,i,j+1);
                         arr[i][j]=-1;
-                    }
+                        row[i]^=(1<<k);
+                        col[j]^=(1<<k);
+                        diag[(i/3)*3+j/3]^=(1<<k);
+                }
                 }
             }
-        }
+                else if(j==arr[0].length-1)
+                flag=flag||sudoku(arr,i+1,0);
+                else
+                flag=flag||sudoku(arr,i,j+1);
         return flag;
     }
 
@@ -1007,9 +1013,9 @@ public class code{
     // boolean[][]vis=new boolean[4][4];
     // int n=8;
     // int m=8;
-        row=new boolean[9];
-        col=new boolean[9];
-        diag=new boolean[9];
+        row=new int[9];
+        col=new int[9];
+        diag=new int[9];
     //     adiag=new boolean[n+m-1];
     // System.out.println(nqueen4_generic(n,m,6,0,0,""));
     // combi_1coin(arr,10,0,"");
@@ -1024,7 +1030,15 @@ public class code{
     {-1,8,-1,3,-1,-1,-1,-1,1},
     {-1,-1,-1,-1,-1,4,-1,5,7}
     };
+    for(int i=0;i<arr.length;i++){
+        for(int j=0;j<arr[0].length;j++){
+            if(arr[i][j]!=-1){
+                row[i]^=(1<<arr[i][j]);
+                col[j]^=(1<<arr[i][j]);
+                diag[(i/3)*3+j/3]^=(1<<arr[i][j]);
+            }
+        }
+    }
     System.out.println(sudoku(arr,0,0));
-    display(arr);
     }
 }
