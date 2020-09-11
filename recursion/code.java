@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class code{
     public static Scanner scn=new Scanner(System.in);
@@ -962,7 +963,7 @@ public class code{
         }
 
         boolean flag=false;
-                if(arr[i][j]==-1) {
+                if(arr[i][j]==-1) { 
                 for(int k=1;k<10;k++){
                     boolean a=is_safe_sudoku(i,j,arr,k);
                     if(a){
@@ -986,6 +987,93 @@ public class code{
                 else
                 flag=flag||sudoku(arr,i,j+1);
         return flag;
+    }
+
+    public static HashSet<String>map;
+    public static int wordbreak(String str,String ans,int idx){
+        if(str.length()==0){
+            System.out.println(ans);
+            return 1;
+        }
+        if(idx==str.length()+1){
+            return 0;
+        }
+
+        int c=0;
+        String s=str.substring(0,idx);
+        if(map.contains(s)){
+            c+=wordbreak(str.substring(idx),ans+s+" ",0);
+        }
+        c+=wordbreak(str,ans,idx+1);
+        return c;
+    }
+    public static int crypto(String str,int[]arr,int idx,String str1,String str2,String str3,int bits){
+        if(idx==str.length()){
+            int num1=0;
+            for(int i=0;i<str1.length();i++){
+                char ch=str1.charAt(i);
+                num1=(num1*10)+arr[ch-'a'];
+            }
+            int num2=0;
+            for(int i=0;i<str2.length();i++){
+                char ch=str2.charAt(i);
+                num2=(num2*10)+arr[ch-'a'];
+            }
+            int num3=0;
+            for(int i=0;i<str3.length();i++){
+                char ch=str3.charAt(i);
+                num3=(num3*10)+arr[ch-'a'];
+            }
+            if((num1+num2)==num3){
+                System.out.println(num1);
+                System.out.println(num2);
+                System.out.println(num3);
+                System.out.println();
+                return 1;
+            }
+            return 0;
+        }
+
+        int c=0;
+        char ch=str.charAt(idx);
+        for(int i=0;i<=9;i++){
+            int mask=(1<<i);
+            if((bits & mask)==0){
+                bits^=mask;
+                arr[ch-'a']=i;
+                c+=crypto(str,arr,idx+1,str1,str2,str3,bits);
+                // arr[ch-'a']=-1;
+                bits^=mask;
+            }
+        }
+        return c;
+    }
+    public static void co(String str2,int[]arr){
+        int num2=0;
+            for(int i=0;i<str2.length();i++){
+                char ch=str2.charAt(i);
+                num2=(num2*10)+arr[ch-'a'];
+            }
+            System.out.println(num2);
+    }
+
+    public static void crypto_arithmetic(String str1,String str2,String str3){
+        String str=str1+str2+str3;
+        int bits=0;
+        String ans="";
+        for(int i=0;i<str.length();i++){
+            char ch=str.charAt(i);
+            int mask=(1<<(ch-'a'));
+            if((bits & mask)==0){
+                ans+=ch;
+                bits^=mask;
+            }
+        }
+        int[]arr=new int[26];
+            for(int i=0;i<26;i++)
+            arr[i]=0;
+            // System.out.println(ans);
+        System.out.print(crypto(ans,arr,0,str1,str2,str3,0));
     }
 
     
@@ -1013,32 +1101,55 @@ public class code{
     // boolean[][]vis=new boolean[4][4];
     // int n=8;
     // int m=8;
-        row=new int[9];
-        col=new int[9];
-        diag=new int[9];
+        // row=new int[9];
+        // col=new int[9];
+        // diag=new int[9];
     //     adiag=new boolean[n+m-1];
     // System.out.println(nqueen4_generic(n,m,6,0,0,""));
     // combi_1coin(arr,10,0,"");
-    int[][]arr={
-    {1,5,-1,9,-1,-1,-1,-1,-1},
-    {2,-1,-1,-1,-1,3,-1,1,-1},
-    {-1,-1,-1,2,-1,-1,7,-1,4},
-    {3,-1,-1,-1,2,-1,8,-1,-1},
-    {-1,-1,8,-1,-1,-1,4,-1,-1},
-    {-1,-1,2,-1,8,-1,-1,-1,3},
-    {7,-1,4,-1,-1,1,-1,-1,-1},
-    {-1,8,-1,3,-1,-1,-1,-1,1},
-    {-1,-1,-1,-1,-1,4,-1,5,7}
-    };
-    for(int i=0;i<arr.length;i++){
-        for(int j=0;j<arr[0].length;j++){
-            if(arr[i][j]!=-1){
-                row[i]^=(1<<arr[i][j]);
-                col[j]^=(1<<arr[i][j]);
-                diag[(i/3)*3+j/3]^=(1<<arr[i][j]);
-            }
-        }
-    }
-    System.out.println(sudoku(arr,0,0));
+    // int[][]arr={
+    // {1,5,-1,9,-1,-1,-1,-1,-1},
+    // {2,-1,-1,-1,-1,3,-1,1,-1},
+    // {-1,-1,-1,2,-1,-1,7,-1,4},
+    // {3,-1,-1,-1,2,-1,8,-1,-1},
+    // {-1,-1,8,-1,-1,-1,4,-1,-1},
+    // {-1,-1,2,-1,8,-1,-1,-1,3},
+    // {7,-1,4,-1,-1,1,-1,-1,-1},
+    // {-1,8,-1,3,-1,-1,-1,-1,1},
+    // {-1,-1,-1,-1,-1,4,-1,5,7}
+    // };
+         //ans=1 5 7 9 4 8 2 3 6 
+            // 2 4 9 7 6 3 5 1 8 
+            // 8 6 3 2 1 5 7 9 4 
+            // 3 1 6 4 2 9 8 7 5 
+            // 5 7 8 1 3 6 4 2 9 
+            // 4 9 2 5 8 7 1 6 3 
+            // 7 3 4 6 5 1 9 8 2 
+            // 9 8 5 3 7 2 6 4 1 
+            // 6 2 1 8 9 4 3 5 7 
+    // for(int i=0;i<arr.length;i++){
+    //     for(int j=0;j<arr[0].length;j++){
+    //         if(arr[i][j]!=-1){
+    //             row[i]^=(1<<arr[i][j]);
+    //             col[j]^=(1<<arr[i][j]);
+    //             diag[(i/3)*3+j/3]^=(1<<arr[i][j]);
+    //         }
+    //     }
+    //  }
+    // System.out.println(sudoku(arr,0,0));
+    // map=new HashSet<String>();
+    // map.add("i");
+    // map.add("ilike");
+    // map.add("like");
+    // map.add("sam");
+    // map.add("ilikesam");
+    // System.out.println(wordbreak("ilikesam","",0));
+    crypto_arithmetic("send","more","money");
+    // int[]arr=new int[26];
+    // arr[12]=3;
+    // arr[14]=0;
+    // arr[17]=6;
+    // arr[4]=8;
+    // co("more",arr);
     }
 }
