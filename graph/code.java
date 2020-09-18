@@ -3,6 +3,8 @@ public class code{
     public static void main(String[]args){
         construct();
         display();
+        removeedge(2,3);
+        display();
     }
          public static class edge{
             int v=0;
@@ -39,6 +41,20 @@ public class code{
             for(edge e:graph[i])
             System.out.print("("+e.v+","+e.w+")"+" ,");
             System.out.println();
+        }
+    }
+    public static void removeedge(int u,int v){
+        int size=graph[u].size();
+        for(int i=0;i<size;i++){
+            if(graph[u].get(i)==v)
+            graph[u].remove(v);
+        }
+        size=graph[v].size();
+        for(int i=0;i<size;i++){
+            if(graph[v].get(i)==u){
+                graph[v].remove(i);
+                break;
+            }
         }
     }
 
