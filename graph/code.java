@@ -180,13 +180,61 @@ public class code{
         System.out.println("Cycle :"+cycle);
         System.out.println("Level :"+level);
     }
-    public class pair{
+    public static class pair{
         int val=0;
         int lev=0;
         pair(int val,int lev){
             this.val=val;
             this.lev=lev;
         }
+    }
+    public static void bfs3(int src){
+        boolean[]vis=new boolean[N];
+        LinkedList<pair>que=new LinkedList<>();
+        que.addLast(new pair(src,0));
+        int level=0;
+        int cycle=0;
+        while(que.size()!=0){
+            pair a=que.removeFirst();
+            level=Math.max(level,a.lev);
+            if(vis[a.val]){
+                cycle++;
+                continue;
+            }
+            vis[a.val]=true;
+            System.out.println(a.val);
+            for(edge e:graph[a.val]){
+                if(!vis[e.v])
+                que.addLast(new pair(e.v,a.lev+1));
+            }
+        }
+        System.out.println("Cycle :"+cycle);
+        System.out.println("Level :"+level);
+    }
+    public static void bfs4(int src){  //for non-cycle 
+        boolean[]vis=new boolean[N];
+        LinkedList<pair>que=new LinkedList<>();
+        que.addLast(new pair(src,0));
+        int level=0;
+        int cycle=0;
+        while(que.size()!=0){
+            pair a=que.removeFirst();
+            level=Math.max(level,a.lev);
+            if(vis[a.val]){
+                cycle++;
+                // continue;
+            }
+            vis[a.val]=true;
+            System.out.println(a.val);
+            for(edge e:graph[a.val]){
+                if(!vis[e.v]){
+                    vis[e.v]=true;
+                que.addLast(new pair(e.v,a.lev+1));
+                }
+            }
+        }
+        System.out.println("Cycle :"+cycle);
+        System.out.println("Level :"+level);
     }
     
     public static void main(String[]args){
@@ -199,6 +247,6 @@ public class code{
         // dfs(0,arr);
         // System.out.println(hamiltonianpath(2,arr,"",0,2));
         // noofcompo();
-        bfs2(0);
+        bfs4(0);
     }
 }
