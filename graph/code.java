@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 public class code{
 
          public static class edge{
@@ -25,7 +26,9 @@ public class code{
         addedge(4,5,2);
         addedge(4,6,3);
         addedge(5,6,8);
-        addedge(2,5,10);
+        // addedge(2,5,10);
+        // addedge(6,7,10);
+        // removeedge(6,7);
     }
     public static void addedge(int u,int v,int w){
         graph[u].add(new edge(v,w));
@@ -88,29 +91,75 @@ public class code{
             removeedge(u,graph[u].get(i).v);
         }
     }
-    public static int hamiltonianpath(int src,boolean[]arr,String ans,int no){
+    public static int hamiltonianpath(int src,boolean[]arr,String ans,int no,int insrc){
         if(no==N-1){
-            System.out.println(ans);
+            System.out.println(ans+src);
+            for(edge e:graph[src]){
+                if(e.v==insrc){
+                    System.out.println("Hamiltonian Cycle:"+ ans+src);
+                    break;
+                }
+            }
             return 1;
         }
         int c=0;
         arr[src]=true;
         for(edge e:graph[src]){
             if(!arr[e.v]){
-                c+=hamiltonianpath(e.v,arr,ans+e.v+" ",no+1);
+                c+=hamiltonianpath(e.v,arr,ans+src+" ",no+1,insrc);
             }
         }
         arr[src]=false;
         return c;
     }
+    public static void compo(int src,boolean[]arr){
+
+        arr[src]=true;
+        for(edge e:graph[src]){
+            if(!arr[e.v]){
+                compo(e.v,arr);
+            }
+        }
+    }
+    public static void noofcompo(){
+        boolean[]arr=new boolean[N];
+        int c=0;
+        for(int i=0;i<N;i++){
+            if(!arr[i]){
+                c++;
+                compo(i,arr);
+            }
+        }
+        System.out.println(c);
+    }
+    public static void bfs(int src){
+        boolean[]vis=new boolean[N];
+        int cycle=0;
+        LinkedList<Integer>que=new LinkedList<>();
+        que.addLast(src);
+        while(que.size()!=0){
+            int a=que.removeFirst();
+            if(vis[a])
+            cycle++;
+            vis[a]=true;
+            System.out.println(a);
+            for(edge e:graph[a]){
+                if(!vis[e.v])
+                que.addLast(e.v);
+            }
+        }
+        System.out.println("Cycle "+cycle);
+    }
     public static void main(String[]args){
         construct();
-        display();
+        // display();
         // removeedge(2,3);
         // removevertex(4);
         // display();
-        boolean[]arr=new boolean[N];
+        // boolean[]arr=new boolean[N];
         // dfs(0,arr);
-        System.out.println(hamiltonianpath(2,arr,"",0));
+        // System.out.println(hamiltonianpath(2,arr,"",0,2));
+        // noofcompo();
+        bfs(0);
     }
 }
