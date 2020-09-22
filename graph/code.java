@@ -150,6 +150,45 @@ public class code{
         }
         System.out.println("Cycle "+cycle);
     }
+    public static void bfs2(int src){
+        boolean[]vis=new boolean[N];
+        LinkedList<Integer>que=new LinkedList<>();
+        que.add(src);
+        que.add(-1);
+        int level=0;
+        int cycle=0;
+        while(que.size()!=1){
+            int a=que.removeFirst();
+            if(a==-1){
+            level++;
+            que.addLast(-1);
+            continue;
+            }
+            else{
+                if(vis[a]){
+                cycle++;
+                continue;
+                }
+                vis[a]=true;
+                System.out.println(a);
+            }
+            for(edge e:graph[a]){
+                if(!vis[e.v])
+                que.add(e.v);
+            }
+        }
+        System.out.println("Cycle :"+cycle);
+        System.out.println("Level :"+level);
+    }
+    public class pair{
+        int val=0;
+        int lev=0;
+        pair(int val,int lev){
+            this.val=val;
+            this.lev=lev;
+        }
+    }
+    
     public static void main(String[]args){
         construct();
         // display();
@@ -160,6 +199,6 @@ public class code{
         // dfs(0,arr);
         // System.out.println(hamiltonianpath(2,arr,"",0,2));
         // noofcompo();
-        bfs(0);
+        bfs2(0);
     }
 }
