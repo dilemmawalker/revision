@@ -220,10 +220,10 @@ public class code{
         while(que.size()!=0){
             pair a=que.removeFirst();
             level=Math.max(level,a.lev);
-            if(vis[a.val]){
-                cycle++;
-                // continue;
-            }
+            // if(vis[a.val]){
+            //     cycle++;
+            //     // continue;
+            // }
             vis[a.val]=true;
             System.out.println(a.val);
             for(edge e:graph[a.val]){
@@ -236,7 +236,33 @@ public class code{
         System.out.println("Cycle :"+cycle);
         System.out.println("Level :"+level);
     }
-    
+    public static void bfs5(int src){
+        LinkedList<Integer>que=new LinkedList<>();
+        boolean[]vis=new boolean[N];
+        int level=0;
+        int cycle=0;
+        que.addLast(src);
+        while(que.size()!=0){
+            int size=que.size();
+            while(size-->0){
+                int a=que.removeFirst();
+                if(vis[a]){
+                    cycle++;
+                    continue;
+                }
+                vis[a]=true;
+                System.out.println(a);
+                for(edge e:graph[a]){
+                    if(!vis[e.v])
+                    que.addLast(e.v);
+                }
+            }
+            level++;
+        }
+        System.out.println("Cycle :"+cycle);
+        System.out.println("Level :"+level);
+    }
+
     public static void main(String[]args){
         construct();
         // display();
@@ -247,6 +273,6 @@ public class code{
         // dfs(0,arr);
         // System.out.println(hamiltonianpath(2,arr,"",0,2));
         // noofcompo();
-        bfs4(0);
+        bfs5(0);
     }
 }
