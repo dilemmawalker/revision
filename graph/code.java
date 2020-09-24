@@ -304,6 +304,6 @@ public class code{
         // dfs(0,arr);
         // System.out.println(hamiltonianpath(2,arr,"",0,2));
         // noofcompo();
-        bfs5(0);
+        bfs5(0);//
     }
 }
