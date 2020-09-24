@@ -132,7 +132,7 @@ public class code{
         }
         System.out.println(c);
     }
-    public static void bfs(int src){
+    public static void bfs(int src){    //basic bfs
         boolean[]vis=new boolean[N];
         int cycle=0;
         LinkedList<Integer>que=new LinkedList<>();
@@ -150,7 +150,7 @@ public class code{
         }
         System.out.println("Cycle "+cycle);
     }
-    public static void bfs2(int src){
+    public static void bfs2(int src){   //using null pointer
         boolean[]vis=new boolean[N];
         LinkedList<Integer>que=new LinkedList<>();
         que.add(src);
@@ -188,7 +188,7 @@ public class code{
             this.lev=lev;
         }
     }
-    public static void bfs3(int src){
+    public static void bfs3(int src){   //using pair class
         boolean[]vis=new boolean[N];
         LinkedList<pair>que=new LinkedList<>();
         que.addLast(new pair(src,0));
@@ -236,7 +236,7 @@ public class code{
         System.out.println("Cycle :"+cycle);
         System.out.println("Level :"+level);
     }
-    public static void bfs5(int src){
+    public static void bfs5(int src){   //using 2 for loop
         LinkedList<Integer>que=new LinkedList<>();
         boolean[]vis=new boolean[N];
         int level=0;
@@ -261,6 +261,37 @@ public class code{
         }
         System.out.println("Cycle :"+cycle);
         System.out.println("Level :"+level);
+    }
+    public class Solution {
+        int[][]dir={{0,-1},{1,0},{0,1},{-1,0}};
+        public void wallsAndGates(int[][] arr) {
+            int n =arr.length;
+            int m=arr[0].length;
+            LinkedList<Integer>que=new LinkedList<>();
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    if(arr[i][j]==0){
+                        que.addLast(i*m+j);
+                    }
+                }
+            }
+            int level=1;
+            while(que.size()!=0){
+                int size=que.size();
+                while(size-->0){
+                    int a=que.removeFirst();
+                    for(int i=0;i<4;i++){
+                        int r=a/m+dir[i][0];
+                        int c=a%m+dir[i][1];
+                        if(r>=0 && c>=0 && r<n && c<m && arr[r][c]==2147483647){
+                            arr[r][c]=level;
+                            que.addLast(r*m+c);
+                        }
+                    }
+                }
+                level++;
+            }
+        }
     }
 
     public static void main(String[]args){
