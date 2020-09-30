@@ -293,6 +293,44 @@ public class code{
             }
         }
     }
+    public static int[]par=new int[N];
+    public static int[]size=new int[N];
+    public static void initialize_union_find(){
+        for(int i=0;i<N;i++){
+            par[i]=i;
+            size[i]=1;
+        }
+    }
+    public static void mergeset(int a,int b){
+        if(size[a]>size[b]){
+            par[b]=a;
+            size[a]+=size[b];
+        }
+        else{
+            par[a]=b;
+            size[b]+=size[a];
+        }
+    }
+    public static int findpar(int vtx){
+        if(par[vtx]==vtx)
+        return vtx;
+
+        return par[vtx]=findpar(par[vtx]);//path compression
+    } 
+    public static void display_union(){
+        for(int i=0;i<N;i++)
+        System.out.print(par[i]+" ");
+        System.out.println();
+        for(int i=0;i<N;i++)
+        System.out.print(size[i]+" ");
+    }
+    public static void union_find(){
+        initialize_union_find();
+        for(int i=0;i<N-1;i++){
+           mergeset(findpar(i),findpar(i+1));
+        }
+        display_union();
+    }
 
     public static void main(String[]args){
         construct();
@@ -304,6 +342,7 @@ public class code{
         // dfs(0,arr);
         // System.out.println(hamiltonianpath(2,arr,"",0,2));
         // noofcompo();
-        bfs5(0);
+        // bfs5(0);
+        union_find();
     }
 }

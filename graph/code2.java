@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class code2{
     public static int  N=8;
@@ -16,6 +17,7 @@ public class code2{
         addedge(6,4);
         addedge(7,5);
         addedge(7,6);
+        // addedge(1,6);
     }
     public static void addedge(int u,int v){
         graph[u].add(v);
@@ -35,10 +37,10 @@ public class code2{
             if(!vis[i])
             topo(7,vis,arr);
         }
-        for(int i=0;i<arr.size();i++)
+        for(int i=arr.size()-1;i>=0;i--)
         System.out.println(arr.get(i));
     }
-    public static void topo(int src,boolean[]vis,ArrayList<Integer> arr){
+    public static void topo(int src,boolean[]vis,ArrayList<Integer> arr){  
         vis[src]=true;
 
         for(int e:graph[src]){
@@ -47,9 +49,71 @@ public class code2{
         }
         arr.add(src);
     }
+    public static void khans(){
+        LinkedList<Integer>arr=new LinkedList<>();
+        LinkedList<Integer>ar1=new LinkedList<>();
+        int c=0;
+        int[]ar=new int[N];
+        for(int i=0;i<N;i++){
+            for(int e:graph[i]){
+                ar[e]++;
+            }
+        }
+        for(int i=0;i<N;i++)
+        if(ar[i]==0){
+        arr.addLast(i);
+        c++;
+        }
+
+        while(arr.size()!=0){
+            int a=arr.removeFirst();
+            ar1.addLast(a);
+            for(int e:graph[a]){
+                if(--ar[e]==0){
+                    arr.addLast(e);
+                    c++;
+                }
+            }
+        }
+        if(c==N)
+        System.out.println("true");
+        else
+        System.out.println("false");
+        for(int i=0;i<ar1.size();i++)
+        System.out.println(ar1.get(i));
+    }
+    public static boolean khans_d(int src,int []vis){
+        if(vis[src]==1)
+        return true;  //true means presence of cycle
+        if(vis[src]==2)
+        return false;
+
+        System.out.println(src);
+        boolean res=false;
+        vis[src]=1;
+        for(int e:graph[src])
+        res=res||khans_d(e,vis);
+
+        vis[src]=2;
+        return res;
+    }
+    public static void khans_dfs(){
+        int[]vis=new int[N];
+        boolean res=false;
+        for(int i=0;i<N;i++){
+        if(vis[i]==0)
+        res=res||khans_d(i,vis);
+        }
+        if(res)
+        System.out.println("Cycle");
+        else
+        System.out.println("not cycle");
+    }
+
     public static void main(String []args){
         construct();
-        display();
-        topographic();
+        // display();
+        // topographic();
+        // khans_dfs();
     }
 }
