@@ -326,8 +326,9 @@ public class code{
     }
     public static void union_find(){
         initialize_union_find();
-        for(int i=0;i<N-1;i++){
-           mergeset(findpar(i),findpar(i+1));
+        for(int i=0;i<graph.length;i++){
+            for(int e:graph[i])
+           mergeset(findpar(e),findpar(i));
         }
         display_union();
     }
