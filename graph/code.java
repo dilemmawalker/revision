@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.Collections;
 public class code{
 
          public static class edge{
@@ -34,7 +36,7 @@ public class code{
         graph[u].add(new edge(v,w));
         graph[v].add(new edge(u,w));
     }
-    public static void display(){
+    public static void display(ArrayList<edge>[]graph){
         for(int i=0;i<N;i++){
             System.out.print(i+" -> ");
             for(edge e:graph[i])
@@ -293,8 +295,52 @@ public class code{
             }
         }
     }
+    public static int[]par=new int[N];
+    public static int[]size=new int[N];
+    public static void initialize_union_find(){
+        for(int i=0;i<N;i++){
+            par[i]=i;
+            size[i]=1;
+        }
+    }
+    public static void mergeset(int a,int b){
+        if(size[a]>size[b]){
+            par[b]=a;
+            size[a]+=size[b];
+        }
+        else{
+            par[a]=b;
+            size[b]+=size[a];
+        }
+    }
+    public static int findpar(int vtx){
+        if(par[vtx]==vtx)
+        return vtx;
+
+        return par[vtx]=findpar(par[vtx]);//path compression
+    } 
+    public static void kruskal(int[][]arr){
+        ArrayList<edge>[]ngraph=new ArrayList[N];
+        for(int i=0;i<N;i++)
+        ngraph[i]=new ArrayList<>();
+
+        Arrays.sort(arr,(int[]a,int[]b)->{
+            return a[2]-b[2];
+        });
+
+        
+        for(int []ar:arr){
+            int a=findpar(ar[0]);
+            int b=findpar(ar[1]);
+            if(a!=b){
+                ngraph[ar[0]].add(new edge(ar[1],ar[2]));
+                ngraph[ar[1]].add(new edge(ar[0],ar[2]));
+                mergeset(a,b);
+            }
+        }
+        display(ngraph);
+    }
    
-    
 
     public static void main(String[]args){
         construct();
@@ -307,5 +353,8 @@ public class code{
         // System.out.println(hamiltonianpath(2,arr,"",0,2));
         // noofcompo();
         // bfs5(0);
+        initialize_union_find();
+        int[][]arr={{0,1,10},{0,3,10},{1,2,10},{2,3,10},{3,4,2},{4,5,2},{4,6,3},{5,6,8}};
+        kruskal(arr);
     }
 }

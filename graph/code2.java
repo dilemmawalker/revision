@@ -110,6 +110,7 @@ public class code2{
         System.out.println("not cycle");
     }
 
+    
     //union find
     public static int[]par=new int[N];
     public static int[]size=new int[N];
