@@ -364,8 +364,8 @@ public class code{
       que.add(new dpair(src,-1,0,0));
       while(que.size()!=0){
         dpair rvtx=que.remove();
-        if(vis[rvtx.src])
-        continue;
+        // if(vis[rvtx.src])
+        // continue;
         vis[rvtx.src]=true;
         if(rvtx.p!=-1){
             dgraph[rvtx.p].add(new edge(rvtx.src,rvtx.w));
