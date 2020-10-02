@@ -402,6 +402,37 @@ public class code{
         }
         display(pgraph);
     }
+    public static class pair_new{
+        int dis=0;
+        int rank=0;
+        pair_new(int dis,int rank){
+            this.dis=dis;
+            this.rank=rank;
+        }
+    }
+    public static int count_arti=0;
+    public static void articulation_point(){
+        arti(0,new pair_new[N],0,new boolean[N]);
+        System.out.println("No. of Articulation Points"+count_arti);
+    }
+    public static void arti(int src,pair_new []data,int idx,boolean []vis){
+
+        data[src].dis=idx;
+        data[src].rank=idx;
+        vis[src]=true;
+        for(edge e:graph[src]){
+            if(!vis[e.v])
+            arti(e.v,data,idx+1,vis);
+        }
+        boolean flag=false;
+        for(edge e:graph[src]){
+            data[src].rank=Math.min(data[src].rank,data[e.v].dis);
+            if(data[src].dis<=data[e.v].rank)
+            flag=true;
+        }
+        if(flag)
+        count_arti++;
+    }
    
 
     public static void main(String[]args){
@@ -419,6 +450,7 @@ public class code{
         // int[][]arr={{0,1,10},{0,3,10},{1,2,10},{2,3,10},{3,4,2},{4,5,2},{4,6,3},{5,6,8}};
         // kruskal(arr);
         // dijkstra(3);
-        prims();
+        // prims();
+        articulation_point();
     }
 }
