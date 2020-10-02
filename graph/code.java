@@ -21,13 +21,13 @@ public class code{
             graph[i]=new ArrayList<>();
             // graph1.add(new ArrayList<edge>());
         }
-        addedge(0,1,10);
+        addedge(0,1,4);
         addedge(0,3,10);
-        addedge(1,2,10);
-        addedge(2,3,40);
+        addedge(1,2,3);
+        addedge(2,3,5);
         addedge(3,4,2);
-        addedge(4,5,2);
-        addedge(4,6,3);
+        addedge(4,5,1);
+        addedge(4,6,6);
         addedge(5,6,8);
         // addedge(2,5,10);
         // addedge(6,7,10);
@@ -364,8 +364,8 @@ public class code{
       que.add(new dpair(src,-1,0,0));
       while(que.size()!=0){
         dpair rvtx=que.remove();
-        // if(vis[rvtx.src])
-        // continue;
+        if(vis[rvtx.src])
+        continue;
         vis[rvtx.src]=true;
         if(rvtx.p!=-1){
             dgraph[rvtx.p].add(new edge(rvtx.src,rvtx.w));
@@ -376,6 +376,31 @@ public class code{
         }
       }
       display(dgraph);
+    }
+    public static void prims(){
+        ArrayList<edge>[]pgraph=new ArrayList[N];
+        PriorityQueue<dpair>pq=new PriorityQueue<>((dpair a,dpair b)->{
+           return a.w-b.w;
+        });
+        for(int i=0;i<N;i++)
+        pgraph[i]=new ArrayList<>();
+        boolean []vis=new boolean[N];
+        pq.add(new dpair(0,-1,0,0));
+        while(pq.size()!=0){
+            dpair rvtx=pq.remove();
+            if(vis[rvtx.src])
+            continue;
+
+            vis[rvtx.src]=true;
+            if(rvtx.p!=-1)
+            pgraph[rvtx.p].add(new edge(rvtx.src,rvtx.w));
+
+            for(edge e:graph[rvtx.src]){
+                if(!vis[e.v])
+                pq.add(new dpair(e.v,rvtx.src,e.w,0));
+            }
+        }
+        display(pgraph);
     }
    
 
@@ -393,6 +418,7 @@ public class code{
         // initialize_union_find();
         // int[][]arr={{0,1,10},{0,3,10},{1,2,10},{2,3,10},{3,4,2},{4,5,2},{4,6,3},{5,6,8}};
         // kruskal(arr);
-        dijkstra(3);
+        // dijkstra(3);
+        prims();
     }
 }
