@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.PriorityQueue;
 public class code{
 
          public static class edge{
@@ -340,6 +341,42 @@ public class code{
         }
         display(ngraph);
     }
+    public static class dpair{
+        int src=0;
+        int p=0;
+        int w=0;
+        int wsf=0;
+        dpair(int src,int p,int w,int wsf){
+            this.src=src;
+            this.p=p;
+            this.w=w;
+            this.wsf=wsf;
+        }
+    }
+    public static void dijkstra(int src){
+        ArrayList<edge>[]dgraph=new ArrayList[N];
+        boolean[]vis=new boolean[N];
+      PriorityQueue<dpair>que=new PriorityQueue<>((dpair a,dpair b)->{
+          return a.wsf=b.wsf;
+      });
+      for(int i=0;i<N;i++)
+      dgraph[i]=new ArrayList<edge>();
+      que.add(new dpair(src,-1,0,0));
+      while(que.size()!=0){
+        dpair rvtx=que.remove();
+        if(vis[rvtx.src])
+        continue;
+        vis[rvtx.src]=true;
+        if(rvtx.p!=-1){
+            dgraph[rvtx.p].add(new edge(rvtx.src,rvtx.w));
+        }
+        for(edge e:graph[rvtx.src]){
+            if(!vis[e.v])
+            que.add(new dpair(e.v,rvtx.src,e.w,e.w+rvtx.wsf));
+        }
+      }
+      display(dgraph);
+    }
    
 
     public static void main(String[]args){
@@ -353,8 +390,9 @@ public class code{
         // System.out.println(hamiltonianpath(2,arr,"",0,2));
         // noofcompo();
         // bfs5(0);
-        initialize_union_find();
-        int[][]arr={{0,1,10},{0,3,10},{1,2,10},{2,3,10},{3,4,2},{4,5,2},{4,6,3},{5,6,8}};
-        kruskal(arr);
+        // initialize_union_find();
+        // int[][]arr={{0,1,10},{0,3,10},{1,2,10},{2,3,10},{3,4,2},{4,5,2},{4,6,3},{5,6,8}};
+        // kruskal(arr);
+        dijkstra(3);
     }
 }
