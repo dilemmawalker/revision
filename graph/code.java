@@ -412,24 +412,29 @@ public class code{
     }
     public static int count_arti=0;
     public static void articulation_point(){
-        arti(0,new pair_new[N],0,new boolean[N]);
-        System.out.println("No. of Articulation Points"+count_arti);
+         pair_new[]data=new pair_new[N];
+        for(int i=0;i<N;i++){
+            data[i]=new pair_new(0,0);
+        }
+        arti(0,data,0,new boolean[N]);
+        System.out.println("No. of Articulation Points: "+count_arti);
     }
+    public static int coo=0;
     public static void arti(int src,pair_new []data,int idx,boolean []vis){
 
-        data[src].dis=idx;
-        data[src].rank=idx;
+        data[src].dis=coo;
+        data[src].rank=coo++;
         vis[src]=true;
-        for(edge e:graph[src]){
-            if(!vis[e.v])
-            arti(e.v,data,idx+1,vis);
-        }
         boolean flag=false;
         for(edge e:graph[src]){
+            if(!vis[e.v]){
+            arti(e.v,data,idx+1,vis);
             data[src].rank=Math.min(data[src].rank,data[e.v].dis);
             if(data[src].dis<=data[e.v].rank)
             flag=true;
+            }
         }
+        
         if(flag)
         count_arti++;
     }
