@@ -1,95 +1,75 @@
-import java.util.Scanner;
 import java.util.*;
+import java.io.*;
 public class Solution{
-    public static Scanner scn=new Scanner(System.in);
+    public static Scanner scn=new Scanner(new InputStreamReader(System.in));
     public static void main(String[]args){
-        int n=scn.nextInt();
-        ArrayList<Integer>arr=new ArrayList<>();
+       int t=scn.nextInt();
+       while(t-->0){
         HashMap<Integer,Integer>map=new HashMap<>();
-        HashSet<Integer>map1=new HashSet<>();
-        HashSet<Integer>map2=new HashSet<>();
-        boolean square=false;
-        boolean rect1=false;
-        boolean rect2=false;
-       while(n-->0){
-           int a=scn.nextInt();
-           if(!map.containsKey(a)){
-           arr.add(a);
-           map.put(a,1);
-           }else{
-               map.put(a,map.get(a)+1);
+        ArrayList<Integer>ar=new ArrayList<>();
+           int n=scn.nextInt();
+           while(n-->0){
+               int a=scn.nextInt();
+                if(!map.containsKey(a)){
+                    ar.add(a);
+                    map.put(a,1);
+                }
+                else{
+                    map.put(a,map.get(a)+1);
+                }
            }
-           if(map.get(a)==4){
-           map1.remove(a);
-           map2.add(a);
+           int size=ar.size();
+           int[][]arr=new int[size][2];
+           for(int i=0;i<size;i++){
+               arr[i][0]=ar.get(i);
+               arr[i][1]=map.get(ar.get(i));
            }
-           else if(map.get(a)==2)
-           map1.add(a);
+           if(ar.size()==1){
+               System.out.println(0);
+               continue;
+           }
+           Arrays.sort(arr,(int[]a,int[]b)->{
+               return b[1]-a[1];
+           });
+           //
+           for(int i=0;i<arr.length;i++)
+           System.out.print(arr[i][0]+" ");
+           System.out.println();
+           //
+           StringBuilder ans=new StringBuilder("");
+           int ei=arr.length-1;
+           while(ei!=0){
+               for(int i=0;i<arr.length;i++){
+                int s=arr[i][0];
+                int val=arr[i][1];
+                if(val==0){
+                    ei=i;
+                    break;
+                }
+                arr[i][1]--;
+                ans.append(s);
+               }
+           }
+        //    while(arr[0][1]!=0){
+        //        int s=arr[i][0];
+        //        int val=arr[i][1];
+        //        if(i==0 && val==0)
+        //        break;
+        //        if(val==0)
+        //        continue;
+        //         ans.append(s);
+        //         arr[i][1]--;
+        //    }
+           boolean flag=false;
+           char ch=ans.charAt(ans.length()-1);
+           int co=0;
+           for(int i=ans.length()-2;i>=0;i--){
+               char c=ans.charAt(i);
+               if(c==ch)
+               break;
+               co++;
+           }
+           System.out.println(co);
        }
-
-       int q=scn.nextInt();
-       while(q-->0){
-           int a=scn.nextInt();
-           if(a>0){
-            if(map.containsKey(a)){
-                map.put(a,map.get(a)+1);
-                if(map.get(a)==4){
-                    map1.remove(a);
-                    map2.add(a);
-                }
-                else if(map.get(a)>=2){
-                    map1.add(a);
-                }
-              }
-              else{
-              map.put(a,1);
-              arr.add(a);
-              }
-           }
-           else{
-            a=a*(-1);
-            map.put(a,map.get(a)-1);
-            if(map.get(a)==3){
-                map2.remove(a);
-                map1.add(a);
-            }
-            else if(map.get(a)==1){
-                map1.remove(a);
-            }
-            else if(map.get(a)==0){
-                map.remove(a);
-                for(int i=0;i<arr.size();i++){
-                    if(arr.get(i)==a){
-                        arr.remove(i);
-                        break;
-                    }
-                }
-            }
-           }
-       if(map2.size()>=2){
-           System.out.println("YES");
-       }
-       if(map2.size()==1){
-           int b=map2.iterator().next();
-        //    map2.add(b);
-            int size=map.get(b);
-            if(size>=8)
-        System.out.println("YES");
-        else if(size>=6){
-            if(map1.size()>=1)
-            System.out.println("YES");
-            else
-            System.out.println("NO");
-        }
-        else{//4 or 5
-            if(map1.size()>=2)
-            System.out.println("YES");
-            else
-            System.out.println("NO");
-        }
-    }
-    else
-    System.out.println("NO");
-    }
 }
 }
