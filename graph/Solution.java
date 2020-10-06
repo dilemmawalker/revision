@@ -37,32 +37,33 @@ public class Solution{
         //    System.out.print(arr[i][0]+" ");
         //    System.out.println();
            //
-           
+          
+        // binary search//
            boolean flag=false;
            int min=0;
            int max=n;
            int mid=0;
-        //    while(min!=max){
+           while(min!=max){
            
-        //         mid=(min+max+1)/2;
-        //        if(solve(mid,map,n,ar)){
-        //            min=mid;
-        //        }
-        //        else
-        //        max=mid-1;
-        //    }
+                mid=(min+max+1)/2;
+               if(solve(mid,map,n,ar)){
+                   min=mid;
+               }
+               else
+               max=mid-1;
+           }
+        //
+        // normal search//
+        // int n2=n;
+        // while(!flag){
+        //     if(solve(n2,map,n,ar)){
+        //         break;
+        //     }
+        //     n2--;
+        // }
         //
         //
-        int n2=n;
-        while(!flag){
-            if(solve(n2,map,n,ar)){
-                break;
-            }
-            n2--;
-        }
-        //
-        //
-           System.out.println(n2-1);
+           System.out.println(max-1);
        }
 }
 public static boolean solve(int size,HashMap<Integer,Integer>map,int n,ArrayList<Integer>arrr){
