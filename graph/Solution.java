@@ -37,32 +37,54 @@ public class Solution{
         //    System.out.print(arr[i][0]+" ");
         //    System.out.println();
            //
-           PriorityQueue<int[]>pq=new PriorityQueue<>((int[]a,int[]b)->{
-               return b[1]-a[1];
-           });
-        for(int i=0;i<size;i++){
-            int val=ar.get(i);
-            pq.add(new int[]{val,map.get(val)});
-        }
+           
            boolean flag=false;
-           while(!flag){
-               if(solve(size,pq,map,n)){
-                   System.out.println(size);
-                   flag=true;
-                   break;
-               }
-               size--;
-           }
-           System.out.println(size);
+           int min=0;
+           int max=n;
+           int mid=0;
+        //    while(min!=max){
+           
+        //         mid=(min+max+1)/2;
+        //        if(solve(mid,map,n,ar)){
+        //            min=mid;
+        //        }
+        //        else
+        //        max=mid-1;
+        //    }
+        //
+        //
+        int n2=n;
+        while(!flag){
+            if(solve(n2,map,n,ar)){
+                break;
+            }
+            n2--;
+        }
+        //
+        //
+           System.out.println(n2-1);
        }
 }
-public static boolean solve(int size,PriorityQueue<int[]>que1,HashMap<Integer,Integer>que2,int n){
+public static boolean solve(int size,HashMap<Integer,Integer>map,int n,ArrayList<Integer>arrr){
+    PriorityQueue<int[]>que1=new PriorityQueue<>((int[]a,int[]b)->{
+        return b[1]-a[1];
+    });
+    HashMap<Integer,Integer>que2=new HashMap<>();
+ for(int i=0;i<arrr.size();i++){
+     int val=arrr.get(i);
+     int b=map.get(val);
+     que1.add(new int[]{val,b});
+     que2.put(val,b);
+ }
+
     int[]arr=new int[n];
     for(int i=0;i<n;i++){
         int a=arr[i];
         if(a!=0){
-        que1.add(new int[]{a,que2.get(a)});
-        que2.remove(a);
+            int b=que2.get(a);
+        que1.add(new int[]{a,b});
+        if(b-1!=0)
+        que2.put(a,b-1);
         }
         if(que1.size()==0)
         return false;
@@ -70,9 +92,11 @@ public static boolean solve(int size,PriorityQueue<int[]>que1,HashMap<Integer,In
         int[]ar=que1.remove();
         if(ar[1]!=0){
         que2.put(ar[0],ar[1]-1);
-        que1.remove(ar[0]);
+        // que1.remove(ar[0]);
         if(i+size<n)
         arr[i+size]=ar[0];
+        // else
+        // return false;
         }
         else return false;
 
