@@ -31,7 +31,7 @@ public class d{
             }
         }
         System.out.println(count);
-    }
+    }//
     public static int[][]dir={{0,1},{1,0},{0,-1},{-1,0}};
     public static  class pair{
         int a=0;
