@@ -102,4 +102,18 @@ public class hopping{
         }
         return dp[src]=c+1;
     }
+    public static int bfs1(int src,boolean[]vis,ArrayList<Integer>[]graph,int[]dp,LinkedList<Integer>que,int[]dp2,int osrc){
+        vis[src]=true;
+        int c=0;
+        int co=0;
+        if(dp[src]!=0){
+        return dp[src];
+        }
+        for(int i=0;i<graph[src].size();i++){
+            int e=graph[src].get(i);
+            
+            c+=bfs1(e,vis,graph,dp,que,dp2,osrc);
+        }
+        return dp[src]=c+1;
+    }
 }

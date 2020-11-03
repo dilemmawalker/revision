@@ -13,21 +13,11 @@ public class d{
                arr[i][j]=ch-'a';
            }
         }
-        boolean[][]vis=new boolean[n][m];
-        int[][]dp=new int[n][m];
         int count=0;
         count=n*m;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(!vis[i][j]){
-                    vis[i][j]=true;
-                bfs(arr,i,j,vis,dp);
-                }
-            }
-        }
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                count+=dp[i][j];
+                count+=bfs(arr,i,j);
             }
         }
         System.out.println(count);
@@ -41,27 +31,24 @@ public class d{
             this.b=b;
         }
     }
-    public static void bfs(int[][]arr,int i,int j,boolean[][]vis,int[][]dp){
+    public static int bfs(int[][]arr,int i,int j){
         LinkedList<pair>que=new LinkedList<pair>();
         int n=arr.length;
         int m=arr[0].length;
+        boolean[][]vis=new boolean[n][m];
         que.addLast(new pair(i,j));
         int level=0;
         boolean flag=true;
-        LinkedList<pair>ll=new LinkedList<>();
-        ll.addLast(new pair(i,j));
         while(que.size()!=0 ){
             int size=que.size();
             while(size-->0){
                 pair rvtx=que.removeFirst();
-                // ll.addLast(rvtx);
                 for(int k=0;k<4;k++){
                     int r=rvtx.a+dir[k][0];
                     int c=rvtx.b+dir[k][1];
                     if(r>=0 && c>=0 && r<n && c<m && arr[rvtx.a][rvtx.b]==arr[r][c]){
                         if(!vis[r][c]){
                             vis[r][c]=true;
-                        que.addLast(new pair(r,c));
                         que.addLast(new pair(r,c));
                         }
                     }
@@ -73,18 +60,9 @@ public class d{
             }
             if(!flag)
             break;
+
             level++;
-            ll.addLast(new pair(-1,-1));
         }
-        int l=level;
-        while(l>=1 && ll.size()!=0){
-            while(true){
-                pair rvtx=ll.removeFirst();
-                if(rvtx.a==-1)
-                break;
-                dp[rvtx.a][rvtx.b]=l;
-            }
-            l--;
-        }
+        return level;
     }
 }

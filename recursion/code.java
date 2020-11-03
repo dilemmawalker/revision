@@ -1042,20 +1042,21 @@ public class code{
                 bits^=mask;
                 arr[ch-'a']=i;
                 c+=crypto(str,arr,idx+1,str1,str2,str3,bits);
-                // arr[ch-'a']=-1;
+                 arr[ch-'a']=0;
                 bits^=mask;
             }
         }
         return c;
     }
-    public static void co(String str2,int[]arr){
-        int num2=0;
-            for(int i=0;i<str2.length();i++){
-                char ch=str2.charAt(i);
-                num2=(num2*10)+arr[ch-'a'];
-            }
-            System.out.println(num2);
-    }
+
+    // public static void co(String str2,int[]arr){
+    //     int num2=0;
+    //         for(int i=0;i<str2.length();i++){
+    //             char ch=str2.charAt(i);
+    //             num2=(num2*10)+arr[ch-'a'];
+    //         }
+    //         System.out.println(num2);
+    // }
 
     public static void crypto_arithmetic(String str1,String str2,String str3){
         String str=str1+str2+str3;
@@ -1070,11 +1071,10 @@ public class code{
             }
         }
         int[]arr=new int[26];
-            for(int i=0;i<26;i++)
-            arr[i]=0;
-            // System.out.println(ans);
         System.out.print(crypto(ans,arr,0,str1,str2,str3,0));
     }
+
+    // public static int crossword()
 
     
     public static void main(String[]args){
